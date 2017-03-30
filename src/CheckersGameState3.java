@@ -70,8 +70,8 @@ public class CheckersGameState3{
         return backward || forward;
     }
 
-    public List<Move> actions(){
-        LinkedList<Move> actions = new LinkedList<Move>();
+    public List<Move3> actions(){
+        LinkedList<Move3> actions = new LinkedList<Move3>();
         for(int i = 0; i < this.board.length; i++){
             if(current_player(i, this.board)){
                 if(this.player == 1){
@@ -96,31 +96,31 @@ public class CheckersGameState3{
     }
 
 
-    private void generate_moves(int origin, int delta1, int delta2, List<Move> actions, boolean king){
+    private void generate_moves(int origin, int delta1, int delta2, List<Move3> actions, boolean king){
         if(can_move(origin, delta1, this.board)){
             String act = origin + "," + (origin + delta1);
-            actions.add(new Move(act));
+            actions.add(new Move3(act));
         }
         if(can_move(origin, delta2, this.board)){
             String act = origin + "," + (origin + delta2);
-            actions.add(new Move(act));
+            actions.add(new Move3(act));
         }
         if(king && can_move(origin, -1 * delta1, this.board)){
             String act = origin + "," + (origin - delta1);
-            actions.add(new Move(act));
+            actions.add(new Move3(act));
         }
         if(king && can_move(origin, -1 * delta2, this.board)){
             String act = origin + "," + (origin - delta2);
-            actions.add(new Move(act));
+            actions.add(new Move3(act));
         }
         calculate_jumps("" + origin, this.board, origin, delta1, delta2, actions, king);
     }
 
 
-    private void calculate_jumps(String path, int[] b, int orig, int delta1, int delta2, List<Move> actions, boolean king){
+    private void calculate_jumps(String path, int[] b, int orig, int delta1, int delta2, List<Move3> actions, boolean king){
         if(!any_jumps(orig, delta1, delta2, b, king)){
             if(path.contains(",")){
-                actions.add(new Move(path));
+                actions.add(new Move3(path));
             }
             return;
         }
@@ -151,7 +151,7 @@ public class CheckersGameState3{
     }
 
 
-    CheckersGameState3 result(Move x){
+    CheckersGameState3 result(Move3 x){
         int[] newState = this.board.clone();
         newState[x.destination()] = this.board[x.origin()];
         newState[x.origin()] = 0;

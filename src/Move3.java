@@ -1,11 +1,11 @@
-public class Move{
+public class Move3{
 
     int origin, destination;
     String[] steps;
     int[] kills;
     String check;
 
-    public Move(String steps){
+    public Move3(String steps){
         String[] s = steps.split(",");
         this.steps = s;
         this.origin = Integer.parseInt(s[0]);
