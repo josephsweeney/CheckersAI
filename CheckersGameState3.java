@@ -38,29 +38,44 @@ public class CheckersGameState3{
         }
     }
 
-    private boolean equal(int pos){
-        return (pos == this.player || pos - 2 == this.player);
+    private boolean current_player(int sq, int[] board){
+        return (board[sq] == this.player || board[sq] - 2 == this.player);
     }
 
-    private boolean within_bounds(int x){
+    private boolean can_kill(int sq, int[] board){
+        return valid_square(sq) && !empty(board, sq) && !current_player(sq, board);
+    }
+
+    private boolean valid_square(int x){
         return (x >= 0 && x <= 34 && x % 9 != 8);
     }
 
-    private boolean can_move(int orig, int delta){
-        return (within_bounds(orig + delta) && this.board[orig + delta] == 0);
+    private boolean empty(int[] board , int sq){
+        return board[sq] == 0;
+    }
+
+    private boolean can_move(int orig, int delta, int[] board){
+        return (valid_square(orig + delta) && empty(board, orig + delta));
     }
 
     private boolean can_jump(int orig, int delta, int[] board){
-        return (within_bounds(orig + delta) && !equal(board[orig + delta]) && board[orig + delta] != 0 && within_bounds(orig + 2 * delta) && board[orig + 2 * delta] == 0);
+        return (can_kill(orig+delta, board) && valid_square(orig + (2 * delta)) && empty(board, orig + 2 * delta));
+    }
+
+    private boolean any_jumps(int orig, int delta1, int delta2, int[] board, boolean king){
+        boolean forward = can_jump(orig, delta1, board) || can_jump(orig, delta2, board);
+        if(!king)
+            return forward;
+        boolean backward = can_jump(orig, delta1 * -1, board) || can_jump(orig, delta2 * -1, board);
+        return backward || forward;
     }
 
     public List<Move> actions(){
         LinkedList<Move> actions = new LinkedList<Move>();
         for(int i = 0; i < this.board.length; i++){
-            if(this.board[i] == this.player || this.board[i]  == (this.player + 2)){
+            if(current_player(i, this.board)){
                 if(this.player == 1){
                     if(this.board[i] == 3){
-                        generate_moves(i, -4, -5, actions, true);
                         generate_moves(i, 4, 5, actions, true);
                     }
                     else{
@@ -69,7 +84,6 @@ public class CheckersGameState3{
                 }
                 else{
                     if(this.board[i] == 4){
-                        generate_moves(i, 4, 5, actions, true);
                         generate_moves(i, -4, -5, actions, true);
                     }
                     else{
@@ -83,38 +97,31 @@ public class CheckersGameState3{
 
 
     private void generate_moves(int origin, int delta1, int delta2, List<Move> actions, boolean king){
-        if(can_move(origin, delta1)){
+        if(can_move(origin, delta1, this.board)){
             String act = origin + "," + (origin + delta1);
             actions.add(new Move(act));
         }
-       else if(can_jump(origin, delta1, this.board)){
-            int jump = origin + 2 * delta1;
-            int[] b2 = this.board.clone();
-            b2[origin + delta1] = 0;
-            String act = origin + "," + jump;
-                        calculate_jumps(act, b2, jump, delta1, delta2, actions, king);
-        }
-        if(can_move(origin, delta2)){
+        if(can_move(origin, delta2, this.board)){
             String act = origin + "," + (origin + delta2);
             actions.add(new Move(act));
         }
-        else if(can_jump(origin, delta2, this.board)){
-            int jump = origin + 2 * delta2;
-            String act = origin + "," + jump;
-            int[] b2 = this.board.clone();
-            b2[origin + delta2] = 0;
-            calculate_jumps(origin + "," + jump, b2, jump, delta1, delta2, actions, king);
+        if(king && can_move(origin, -1 * delta1, this.board)){
+            String act = origin + "," + (origin - delta1);
+            actions.add(new Move(act));
         }
+        if(king && can_move(origin, -1 * delta2, this.board)){
+            String act = origin + "," + (origin - delta2);
+            actions.add(new Move(act));
+        }
+        calculate_jumps("" + origin, this.board, origin, delta1, delta2, actions, king);
     }
 
 
     private void calculate_jumps(String path, int[] b, int orig, int delta1, int delta2, List<Move> actions, boolean king){
-        if(!can_jump(orig, delta1, b) && !can_jump(orig, delta2, b) && !king){
-            actions.add(new Move(path));
-            return;
-        }
-        if(king && !can_jump(orig, delta1, b) && !can_jump(orig, delta2, b) && !can_jump(orig, -1 * delta1, b) && !can_jump(orig, -1 * delta2, b)){
-            actions.add(new Move(path));
+        if(!any_jumps(orig, delta1, delta2, b, king)){
+            if(path.contains(",")){
+                actions.add(new Move(path));
+            }
             return;
         }
         if(can_jump(orig, delta1, b)){
