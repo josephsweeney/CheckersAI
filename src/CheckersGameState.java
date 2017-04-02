@@ -1,4 +1,4 @@
-import java . util . List ;
+import java.util.List;
 public interface CheckersGameState {
 String player ();
 List < Move > actions ();
