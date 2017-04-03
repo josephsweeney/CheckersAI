@@ -129,9 +129,9 @@ public class CheckersGameState3{
         return backward || forward;
     }
 
-    public List<Move3> actions(){
-        LinkedList<Move3> moves = new LinkedList<Move3>();
-        LinkedList<Move3> jumps = new LinkedList<Move3>();
+    public List<Move> actions(){
+        LinkedList<Move> moves = new LinkedList<Move>();
+        LinkedList<Move> jumps = new LinkedList<Move>();
         for(int i = 0; i < this.board.length; i++){
             if(current_player(i, this.board)){
                 if(this.player == 1){
@@ -159,7 +159,7 @@ public class CheckersGameState3{
     }
 
 
-    private void generate_moves(int origin, int delta1, int delta2, List<Move3> moves, List<Move3> jumps, boolean king){
+    private void generate_moves(int origin, int delta1, int delta2, List<Move> moves, List<Move> jumps, boolean king){
         calculate_jumps("" + origin, this.board, origin, delta1, delta2, jumps, king);
         if(jumps.isEmpty()){
             if(can_move(origin, delta1, this.board)){
@@ -224,7 +224,7 @@ public class CheckersGameState3{
     }
 
 
-    CheckersGameState3 result(Move3 x){
+    CheckersGameState3 result(Move x){
         int[] newState = this.board.clone();
         newState[x.destination()] = this.board[x.origin()];
         newState[x.origin()] = 0;
