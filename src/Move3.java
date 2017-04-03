@@ -25,7 +25,7 @@ public class Move3 implements Move{
         return k;
     }
 
-    public int origin(){
+    public int source(){
         return src;
     }
 

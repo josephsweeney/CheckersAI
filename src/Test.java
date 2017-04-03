@@ -22,7 +22,8 @@ public class Test{
 
         CheckersGameState3 s2 = new CheckersGameState3(1, b2);
         s2.printState();
-        for(Move3 m: s2.actions()){
+        s2.result(s2.actions().get(1)).printState();
+        for(Move m: s2.actions()){
             System.out.println(m);
         }
     }

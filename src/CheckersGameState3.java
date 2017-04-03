@@ -182,7 +182,7 @@ public class CheckersGameState3{
     }
 
 
-    private void calculate_jumps(String path, int[] b, int orig, int delta1, int delta2, List<Move3> jumps, boolean king){
+    private void calculate_jumps(String path, int[] b, int orig, int delta1, int delta2, List<Move> jumps, boolean king){
         if(!any_jumps(orig, delta1, delta2, b, king)){
             if(path.contains(",")){
                 jumps.add(new Move3(path));
@@ -226,16 +226,16 @@ public class CheckersGameState3{
 
     CheckersGameState3 result(Move x){
         int[] newState = this.board.clone();
-        newState[x.destination()] = this.board[x.origin()];
-        newState[x.origin()] = 0;
-        if(x.destination < 4 &&  this.player == 2){
+        newState[x.destination()] = this.board[x.source()];
+        newState[x.source()] = 0;
+        if(x.destination() < 4 &&  this.player == 2){
             newState[x.destination()] = 4;
         }
         else if(x.destination() > 30 && this.player == 1){
            newState[x.destination()] = 3;
         }
-        if(x.kills() != null){
-            for(int k: x.kills()){
+        if(x.captures() != null){
+            for(int k: x.captures()){
                 newState[k] = 0;
             }
         }
