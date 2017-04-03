@@ -17,10 +17,13 @@ public class CheckersGameState2 implements CheckersGameState {
   public static void main(String args[]) {
     CheckersGameState2 state = new CheckersGameState2();
     state.printState();
-    List<Move> actions = state.actions();
-    for(Move move : actions) {
-      System.out.println((Move2)move);
-      state.result(move).printState();
+    for(int i = 0; i<6; i++){
+      List<Move> actions = state.actions();
+      for(Move move : actions) {
+        System.out.println((Move2)move+" ~~ "+((Move2)move).dest);
+      }
+      state = (CheckersGameState2)state.result(actions.get(0));
+      state.printState();
     }
   }
 
@@ -119,42 +122,28 @@ public class CheckersGameState2 implements CheckersGameState {
     ArrayList<Move> moves = new ArrayList<Move>();
     int piece = board[starting];
     int[] neighbors = neighbors(current);
+    int beg, end;
     if(piece == 1) {
-      for(int i = 0; i<2; i++) {
-        if(neighbors[i] != -1 && isEnemy(board[neighbors[i]])) {
-          int next = neighbors(neighbors[i])[i];
-          if(board[next] == 0) {
-            int [] newPath = Arrays.copyOf(path, path.length+1);
-            int c = capture == -1 ? neighbors[i] : capture;
-            moves.add(new Move2(newPath, c));
-            moves.addAll(findJumpMoves(starting, next, newPath,c));
-          }
-        }
-      }
+      beg = 0;
+      end = 2;
     }
     else if(piece == 2) {
-      for(int i = 2; i<4; i++) {
-        if(neighbors[i] != -1 && isEnemy(board[neighbors[i]])) {
-          int next = neighbors(neighbors[i])[i];
-          if(board[next] == 0) {
-            int [] newPath = Arrays.copyOf(path, path.length+1);
-            int c = capture == -1 ? neighbors[i] : capture;
-            moves.add(new Move2(newPath, c));
-            moves.addAll(findJumpMoves(starting, next, newPath, c));
-          }
-        }
-      }
+      beg = 2;
+      end = 4;
     }
     else {
-      for(int i = 0; i<4; i++) {
-        if(neighbors[i] != -1 && isEnemy(board[neighbors[i]])) {
-          int next = neighbors(neighbors[i])[i];
-          if(board[next] == 0) {
-            int [] newPath = Arrays.copyOf(path, path.length+1);
-            int c = capture == -1 ? neighbors[i] : capture;
-            moves.add(new Move2(newPath, c));
-            moves.addAll(findJumpMoves(starting, next, newPath, c));
-          }
+      beg = 0;
+      end = 4;
+    }
+    for(int i = beg; i<end; i++) {
+      if(neighbors[i] != -1 && isEnemy(board[neighbors[i]])) {
+        int next = neighbors(neighbors[i])[i];
+        if(next != -1 && board[next] == 0) {
+          int [] newPath = Arrays.copyOf(path, path.length+1);
+          newPath[path.length] = next;
+          int c = capture == -1 ? neighbors[i] : capture;
+          moves.add(new Move2(newPath, c));
+          moves.addAll(findJumpMoves(starting, next, newPath, c));
         }
       }
     }
