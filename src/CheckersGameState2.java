@@ -118,7 +118,7 @@ public class CheckersGameState2 implements CheckersGameState {
     return neighbors;
   }
 
-  private ArrayList<Move> findJumpMoves(int starting, int current, int[] path, int capture) {
+  private ArrayList<Move> findJumpMoves(int starting, int current, int[] path) {
     ArrayList<Move> moves = new ArrayList<Move>();
     int piece = board[starting];
     int[] neighbors = neighbors(current);
@@ -141,9 +141,12 @@ public class CheckersGameState2 implements CheckersGameState {
         if(next != -1 && board[next] == 0) {
           int [] newPath = Arrays.copyOf(path, path.length+1);
           newPath[path.length] = next;
-          int c = capture == -1 ? neighbors[i] : capture;
-          moves.add(new Move2(newPath, c));
-          moves.addAll(findJumpMoves(starting, next, newPath, c));
+          ArrayList<Move> jumpMoves = findJumpMoves(starting, next, newPath);
+          if(jumpMoves.size() == 0){
+            moves.add(new Move2(newPath));
+          } else {
+            moves.addAll(jumpMoves);
+          }
         }
       }
     }
@@ -155,7 +158,7 @@ public class CheckersGameState2 implements CheckersGameState {
     for(int i = 0; i<32; i++) {
       int piece = board[i];
       if(piece != 0 && correctColor(piece)) {
-        captures.addAll(findJumpMoves(i, i, new int[]{i}, -1));
+        captures.addAll(findJumpMoves(i, i, new int[]{i}));
       }
     }
     return captures;
@@ -170,26 +173,26 @@ public class CheckersGameState2 implements CheckersGameState {
         if(space == 1) {
           // black piece
           if(neighbors[0] != -1 && board[neighbors[0]] == 0) {
-            moves.add(new Move2(i, neighbors[0], -1));
+            moves.add(new Move2(i, neighbors[0]));
           }
           if(neighbors[1] != -1 && board[neighbors[1]] == 0) {
-            moves.add(new Move2(i, neighbors[1], -1));
+            moves.add(new Move2(i, neighbors[1]));
           }
         }
         else if(space == 2) {
           // white piece
           if(neighbors[2] != -1 && board[neighbors[2]] == 0) {
-            moves.add(new Move2(i, neighbors[2], -1));
+            moves.add(new Move2(i, neighbors[2]));
           }
           if(neighbors[3] != -1 && board[neighbors[3]] == 0) {
-            moves.add(new Move2(i, neighbors[3], -1));
+            moves.add(new Move2(i, neighbors[3]));
           }
         }
         else {
           // king
           for(int j = 0; j<4; j++) {
             if(neighbors[j] != -1 && board[neighbors[j]] == 0) {
-              moves.add(new Move2(i, neighbors[j], -1));
+              moves.add(new Move2(i, neighbors[j]));
             }
           }
         }
@@ -213,8 +216,11 @@ public class CheckersGameState2 implements CheckersGameState {
     Move2 move = (Move2) x;
     int[] newBoard = Arrays.copyOf(board, board.length);
     int newPlayer = otherPlayer();
-    if(move.captures != -1) {
-      newBoard[move.captures] = 0;
+    int[] captures = move.captures();
+    if(captures[0] != -1) {
+      for(int i = 0; i<captures.length; i++) {
+        newBoard[captures[i]] = 0;
+      }
     }
     newBoard[move.dest] = newBoard[move.src];
     newBoard[move.src] = 0;
