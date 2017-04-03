@@ -1,6 +1,6 @@
-public class Move3{
+public class Move3 implements Move{
 
-    int origin, destination;
+    int src, dest;
     String[] steps;
     int[] kills;
     String check;
@@ -8,13 +8,13 @@ public class Move3{
     public Move3(String steps){
         String[] s = steps.split(",");
         this.steps = s;
-        this.origin = Integer.parseInt(s[0]);
-        this.destination = Integer.parseInt(s[s.length - 1]);
+        this.src = Integer.parseInt(s[0]);
+        this.dest = Integer.parseInt(s[s.length - 1]);
         kills = calculate_kills(s);
     }
 
     public int[] calculate_kills(String[] steps){
-        int diff = this.origin - this.destination;
+        int diff = this.src - this.dest;
         if(Math.abs(diff) == 4 || Math.abs(diff) == 5){
             return null;
         }
@@ -26,14 +26,14 @@ public class Move3{
     }
 
     public int origin(){
-        return origin;
+        return src;
     }
 
     public int destination(){
-        return destination;
+        return dest;
     }
 
-    public int[] kills(){
+    public int[] captures(){
         return kills;
     }
 

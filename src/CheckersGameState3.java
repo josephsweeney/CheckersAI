@@ -11,6 +11,65 @@ public class CheckersGameState3{
         this.board = board;
     }
 
+    public CheckersGameState3(int player, String[] board){
+        this.player = player;
+        this.board = to_array(board);
+    }
+
+    public int convert(String s){
+        if(s.equals("-")){
+            return 0;
+        }
+        else if(s.equals("b")){
+            return 1;
+        }
+        else if(s.equals("w")){
+            return 2;
+        }
+        else if(s.equals("B")){
+            return 3;
+        }
+        else{
+            return 4;
+        }
+    }
+
+    public int[] to_array(String[] board){
+        int[] b = new int[35];
+        int i = 0;
+        int j = 0;
+        int added = 0;
+        boolean leading = false;
+        while(i < 35 ){
+            if(i % 9 == 8){
+                b[i] = 0;
+            }
+            else if(leading){
+                b[i] = convert(board[j]);
+            }
+            else{
+                b[i] =convert(board[j+1]);
+            }
+            if(i % 9 == 8){
+
+                i++;
+                continue;
+            }
+            j = j + 2;
+            i++;
+            added++;
+            if(added == 4){
+                added = 0;
+                leading = !leading;
+            }
+            if(j == 35){
+                added =0;
+                leading = false;
+            }
+        }
+        return b;
+    }
+
     String player(){
         if(this.player == 1){
             return "black";
@@ -134,24 +193,32 @@ public class CheckersGameState3{
             int jump = orig + 2 * delta1;
             int[] b2 = b.clone();
             b2[orig + delta1] = 0;
+            b2[orig + 2 * delta1] = b2 [orig];
+            b2[orig] = 0;
             calculate_jumps(path + "," + jump, b2, jump, delta1, delta2, jumps, king);
         }
         if(can_jump(orig, delta2, b)){
             int jump = orig + 2 * delta2;
             int[] b3 = b.clone();
             b3[orig + delta2] = 0;
+            b3[orig + 2 * delta2] = b3[orig];
+            b3[orig] = 0;
             calculate_jumps(path + "," + jump, b3, jump, delta1, delta2, jumps, king);
         }
         if(king && can_jump(orig, -1 * delta1, b)){
             int jump = orig + -2 * delta1;
             int[] b4 = b.clone();
             b4[orig + (-1 * delta1)] = 0;
+            b4[orig + (-2 * delta1)] = b4[orig];
+            b4[orig] = 0;
             calculate_jumps(path + "," + jump, b4, jump, delta1, delta2, jumps, king);
         }
         if(king && can_jump(orig, -1 * delta2, b)){
             int jump = orig + -2 * delta2;
             int[] b5 = b.clone();
             b5[orig + -1 * delta2] = 0;
+            b5[orig + (-2 * delta2)] = b5[orig];
+            b5[orig] = 0;
             calculate_jumps(path + "," + jump, b5, jump, delta1, delta2, jumps, king);
         }
     }
