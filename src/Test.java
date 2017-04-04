@@ -19,10 +19,20 @@ public class Test{
                        "w", "-", "w", "-", "w", "-", "w", "-",
                        "-", "w", "-", "-", "-", "w", "-", "w",
                        "w", "-", "w", "-", "w", "-", "w", "-"};
+        String[] b3 = {"-", "-", "-", "b", "-", "b", "-", "b",
+                      "b", "-", "b", "-", "b", "-", "b", "-",
+                       "-", "b", "-", "w", "-", "b", "-", "b",
+                       "-", "-", "w", "-", "w", "-", "-", "-",
+                       "-", "-", "-", "-", "-", "-", "-", "-",
+                       "w", "-", "b", "-", "w", "-", "w", "-",
+                       "-", "-", "-", "-", "-", "w", "-", "w",
+                       "-", "-", "w", "-", "w", "-", "w", "-"};
 
-        CheckersGameState3 s2 = new CheckersGameState3(1, b2);
+
+        CheckersGameState3 s2 = new CheckersGameState3(2, b3);
         s2.printState();
-        s2.result(s2.actions().get(1)).printState();
+        System.out.println(s2.actions().get(0));
+        s2.result(s2.actions().get(0)).printState();
         for(Move m: s2.actions()){
             System.out.println(m);
         }
