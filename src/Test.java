@@ -24,10 +24,10 @@ public class Test{
         String[] b3 = {"-", "-", "-", "b", "-", "b", "-", "b",
                       "b", "-", "b", "-", "b", "-", "b", "-",
                        "-", "b", "-", "w", "-", "b", "-", "b",
-                       "-", "-", "w", "-", "w", "-", "-", "-",
-                       "-", "-", "-", "-", "-", "-", "-", "-",
+                       "-", "-", "b", "-", "w", "-", "-", "-",
+                       "-", "-", "-", "b", "-", "-", "-", "-",
                        "w", "-", "b", "-", "w", "-", "w", "-",
-                       "-", "-", "-", "-", "-", "w", "-", "w",
+                       "-", "w", "-", "-", "-", "w", "-", "w",
                        "-", "-", "w", "-", "w", "-", "w", "-"};
 
 
@@ -35,13 +35,16 @@ public class Test{
         CheckersGameState s2 = new CheckersGameState3(2, b);
         CheckersGameState s3 = new CheckersGameState3(1, b2);
         CheckersGameState s4 = new CheckersGameState3(2, b2);
-        CheckersGameState s5 = new CheckersGameState3(2, b3);
+        CheckersGameState s5 = new CheckersGameState3(1, b3);
+        CheckersGameState s6 = new CheckersGameState3(2, b3);
         printMoves(s1);
         printMoves(s2);
         printMoves(s3);
         printMoves(s4);
         printMoves(s5);
         s5.result(s5.actions().get(0)).printState();
+        printMoves(s6);
+        s6.result(s6.actions().get(0)).printState();
     }
 
     static void printMoves(CheckersGameState s){
