@@ -226,8 +226,9 @@ public class CheckersGameState3 implements CheckersGameState{
 
     public CheckersGameState3 result(Move x){
         int[] newState = this.board.clone();
-        newState[x.destination()] = this.board[x.source()];
+        int type = this.board[x.source()];
         newState[x.source()] = 0;
+        newState[x.destination()] = type;
         if(x.destination() < 4 &&  this.player == 2){
             newState[x.destination()] = 4;
         }
