@@ -47,14 +47,53 @@ public class Move3 implements Move{
 //        else if(pos < 17){
 //            int x = 
 //
-   public String toString(){
-        String move = "(" + this.steps[0] + ":" + this.steps[1] + ")";
-        if(this.steps.length > 2){
-            for(int i = 1; i < this.steps.length - 1; i++){
-               move += ":(" + this.steps[i] + ":" + this.steps[i+1] + ")";
-            }
+
+    private String convert(int position) {
+        // Converts a position to the correct String
+        int row = position / 4;
+        int col = (position % 4) * 2;
+        if(row % 2 == 0){
+           col++;
         }
-        return move;
+        return "("+(7-row)+":"+col+")";
     }
 
+    private int shift(int position){
+        int row, column;
+        int new_pos = position;
+        if(position >= 27){
+            return (position - 3);
+        }
+        else if(position >= 18){
+            return (position - 2);
+        }
+        else if(position >= 9){
+            return (position - 1);
+        }
+        else{
+            return position;
+        }
+    }
+
+
+
+
+//   public String toString(){
+//        String move = "(" + this.steps[0] + ":" + this.steps[1] + ")";
+//        if(this.steps.length > 2){
+//            for(int i = 1; i < this.steps.length - 1; i++){
+//               move += ":(" + this.steps[i] + ":" + this.steps[i+1] + ")";
+//            }
+//       }
+//        return move;
+//    }
+//
+     public String toString() {
+         String output = "";
+         for(int i = 0; i<steps.length; i++) {
+            output += i!=0 ? ":" : "";
+            output += convert(shift(Integer.parseInt(steps[i])));
+         }
+        return output;
+       }
 }
