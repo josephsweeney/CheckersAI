@@ -48,15 +48,25 @@ public class Test{
         CheckersGameState s5 = new CheckersGameState3(1, b3);
         CheckersGameState s6 = new CheckersGameState3(2, b3);
         CheckersGameState s7 = new CheckersGameState3(1, b4);
+        System.out.println("State 1");
         printMoves(s1);
+        System.out.println("State 2");
         printMoves(s2);
+        System.out.println("State 3");
         printMoves(s3);
+        System.out.println("State 4");
         printMoves(s4);
+        System.out.println("State 5");
         printMoves(s5);
+        System.out.println("Result of State 5");
         s5.result(s5.actions().get(0)).printState();
+        System.out.println("State 6");
         printMoves(s6);
+        System.out.println("Result of State 6");
         s6.result(s6.actions().get(0)).printState();
+        System.out.println("State 7");
         printMoves(s7);
+        System.out.println("Result of State 7");
         s7.result(s7.actions().get(0)).printState();
     }
 
@@ -65,5 +75,6 @@ public class Test{
         for(Move m: s.actions()){
             System.out.println(m);
         }
+        System.out.println();
     }
 }
