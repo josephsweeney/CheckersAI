@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class CheckersGameState2 implements CheckersGameState {
 
+  // TODO: Fix king infinite recursion
+
   // 0 = empty
   // 1 = black piece
   // 2 = white piece
@@ -17,10 +19,11 @@ public class CheckersGameState2 implements CheckersGameState {
   public static void main(String args[]) {
     CheckersGameState2 state = new CheckersGameState2();
     state.printState();
-    for(int i = 0; i<6; i++){
+    for(int i = 0; i<100; i++){
       List<Move> actions = state.actions();
+      if(actions.size()==0){break;}
       for(Move move : actions) {
-        System.out.println((Move2)move+" ~~ "+((Move2)move).dest);
+        System.out.println((Move2)move+" ~~ "+((Move2)move).destination());
       }
       state = (CheckersGameState2)state.result(actions.get(0));
       state.printState();
@@ -136,7 +139,8 @@ public class CheckersGameState2 implements CheckersGameState {
       end = 4;
     }
     for(int i = beg; i<end; i++) {
-      if(neighbors[i] != -1 && isEnemy(board[neighbors[i]])) {
+      boolean valid = neighbors[i] != -1 && isEnemy(board[neighbors[i]]);
+      if(valid && !isCaptured(neighbors[i], path)) {
         int next = neighbors(neighbors[i])[i];
         if(next != -1 && board[next] == 0) {
           int [] newPath = Arrays.copyOf(path, path.length+1);
@@ -151,6 +155,17 @@ public class CheckersGameState2 implements CheckersGameState {
       }
     }
     return moves;
+  }
+
+  private boolean isCaptured(int space, int[] path) {
+    Move temp = new Move2(path);
+    int[] captured = temp.captures();
+    for(int i = 0; i<captured.length; i++) {
+      if(captured[i]==space) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private ArrayList<Move> captures() {
@@ -222,10 +237,28 @@ public class CheckersGameState2 implements CheckersGameState {
         newBoard[captures[i]] = 0;
       }
     }
-    newBoard[move.dest] = newBoard[move.src];
-    newBoard[move.src] = 0;
+    newBoard[move.destination()] = newBoard[move.source()];
+    newBoard[move.source()] = 0;
+
+    if(promote(move.source(), move.destination())) {
+      newBoard[move.destination()] += 2;
+    }
 
     return new CheckersGameState2(newPlayer, newBoard);
+  }
+
+  private boolean promote(int src, int dest) {
+    switch(board[src]) {
+      case 0:
+        return false;
+      case 1:
+        return dest>=28;
+      case 2:
+        return dest<=3;
+      case 3: case 4:
+        return false;
+    }
+    return false;
   }
 
   public void printState () {

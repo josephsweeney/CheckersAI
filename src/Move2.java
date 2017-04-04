@@ -15,6 +15,14 @@ public class Move2 implements Move {
     path = p;
   }
 
+  public int source() {
+    return src;
+  }
+
+  public int destination() {
+    return dest;
+  }
+
   private int[] neighbors(int index) {
     int[] neighbors = new int[4];
     int row = (index - index%4)/4;
