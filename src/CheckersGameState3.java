@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.LinkedList;
 
-public class CheckersGameState3{
+public class CheckersGameState3 implements CheckersGameState{
 
     int player;
     int[] board;
@@ -70,7 +70,7 @@ public class CheckersGameState3{
         return b;
     }
 
-    String player(){
+    public String player(){
         if(this.player == 1){
             return "black";
         }
@@ -224,7 +224,7 @@ public class CheckersGameState3{
     }
 
 
-    CheckersGameState3 result(Move x){
+    public CheckersGameState3 result(Move x){
         int[] newState = this.board.clone();
         newState[x.destination()] = this.board[x.source()];
         newState[x.source()] = 0;
@@ -242,7 +242,7 @@ public class CheckersGameState3{
         return new CheckersGameState3(1 - this.player, newState);
     }
 
-    void printState(){
+   public void printState(){
         boolean leading = false;
         int printed = 0;
         for(int i = 0; i < this.board.length; i++){

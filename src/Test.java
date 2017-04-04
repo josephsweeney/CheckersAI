@@ -4,13 +4,14 @@ public class Test{
 
     public static void main(String[] args){
         String[] b = {"-", "b", "-", "b", "-", "b", "-", "b",
-                      "-", "-", "-", "-", "B", "-", "b", "-",
-                       "-", "w", "-", "w", "-", "b", "-", "-",
-                       "-", "-", "-", "-", "b", "-", "w", "-",
+                      "b", "-", "b", "-", "b", "-", "b", "-",
+                       "-", "b", "-", "b", "-", "b", "-", "b",
+                       "-", "-", "-", "-", "-", "-", "-", "-",
                        "-", "-", "-", "-", "-", "-", "-", "-",
                        "w", "-", "w", "-", "w", "-", "w", "-",
-                       "-", "w", "-", "-", "-", "w", "-", "w",
+                       "-", "w", "-", "w", "-", "w", "-", "w",
                        "w", "-", "w", "-", "w", "-", "w", "-"};
+
         String[] b2 = {"-", "-", "-", "b", "-", "b", "-", "b",
                       "b", "-", "w", "-", "b", "-", "b", "-",
                        "-", "b", "-", "B", "-", "b", "-", "b",
@@ -19,6 +20,7 @@ public class Test{
                        "w", "-", "w", "-", "w", "-", "w", "-",
                        "-", "w", "-", "-", "-", "w", "-", "w",
                        "w", "-", "w", "-", "w", "-", "w", "-"};
+
         String[] b3 = {"-", "-", "-", "b", "-", "b", "-", "b",
                       "b", "-", "b", "-", "b", "-", "b", "-",
                        "-", "b", "-", "w", "-", "b", "-", "b",
@@ -29,11 +31,22 @@ public class Test{
                        "-", "-", "w", "-", "w", "-", "w", "-"};
 
 
-        CheckersGameState3 s2 = new CheckersGameState3(2, b3);
-        s2.printState();
-        System.out.println(s2.actions().get(0));
-        s2.result(s2.actions().get(0)).printState();
-        for(Move m: s2.actions()){
+        CheckersGameState s1 = new CheckersGameState3(1, b);
+        CheckersGameState s2 = new CheckersGameState3(2, b);
+        CheckersGameState s3 = new CheckersGameState3(1, b2);
+        CheckersGameState s4 = new CheckersGameState3(2, b2);
+        CheckersGameState s5 = new CheckersGameState3(2, b3);
+        printMoves(s1);
+        printMoves(s2);
+        printMoves(s3);
+        printMoves(s4);
+        printMoves(s5);
+        s5.result(s5.actions().get(0)).printState();
+    }
+
+    static void printMoves(CheckersGameState s){
+        s.printState();
+        for(Move m: s.actions()){
             System.out.println(m);
         }
     }
