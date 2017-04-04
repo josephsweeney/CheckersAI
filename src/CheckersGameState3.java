@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.LinkedList;
 
-public class CheckersGameState3{
+public class CheckersGameState3 implements CheckersGameState{
 
     int player;
     int[] board;
@@ -11,7 +11,66 @@ public class CheckersGameState3{
         this.board = board;
     }
 
-    String player(){
+    public CheckersGameState3(int player, String[] board){
+        this.player = player;
+        this.board = to_array(board);
+    }
+
+    public int convert(String s){
+        if(s.equals("-")){
+            return 0;
+        }
+        else if(s.equals("b")){
+            return 1;
+        }
+        else if(s.equals("w")){
+            return 2;
+        }
+        else if(s.equals("B")){
+            return 3;
+        }
+        else{
+            return 4;
+        }
+    }
+
+    public int[] to_array(String[] board){
+        int[] b = new int[35];
+        int i = 0;
+        int j = 0;
+        int added = 0;
+        boolean leading = false;
+        while(i < 35 ){
+            if(i % 9 == 8){
+                b[i] = 0;
+            }
+            else if(leading){
+                b[i] = convert(board[j]);
+            }
+            else{
+                b[i] =convert(board[j+1]);
+            }
+            if(i % 9 == 8){
+
+                i++;
+                continue;
+            }
+            j = j + 2;
+            i++;
+            added++;
+            if(added == 4){
+                added = 0;
+                leading = !leading;
+            }
+            if(j == 35){
+                added =0;
+                leading = false;
+            }
+        }
+        return b;
+    }
+
+    public String player(){
         if(this.player == 1){
             return "black";
         }
@@ -70,9 +129,9 @@ public class CheckersGameState3{
         return backward || forward;
     }
 
-    public List<Move3> actions(){
-        LinkedList<Move3> moves = new LinkedList<Move3>();
-        LinkedList<Move3> jumps = new LinkedList<Move3>();
+    public List<Move> actions(){
+        LinkedList<Move> moves = new LinkedList<Move>();
+        LinkedList<Move> jumps = new LinkedList<Move>();
         for(int i = 0; i < this.board.length; i++){
             if(current_player(i, this.board)){
                 if(this.player == 1){
@@ -100,7 +159,7 @@ public class CheckersGameState3{
     }
 
 
-    private void generate_moves(int origin, int delta1, int delta2, List<Move3> moves, List<Move3> jumps, boolean king){
+    private void generate_moves(int origin, int delta1, int delta2, List<Move> moves, List<Move> jumps, boolean king){
         calculate_jumps("" + origin, this.board, origin, delta1, delta2, jumps, king);
         if(jumps.isEmpty()){
             if(can_move(origin, delta1, this.board)){
@@ -123,7 +182,7 @@ public class CheckersGameState3{
     }
 
 
-    private void calculate_jumps(String path, int[] b, int orig, int delta1, int delta2, List<Move3> jumps, boolean king){
+    private void calculate_jumps(String path, int[] b, int orig, int delta1, int delta2, List<Move> jumps, boolean king){
         if(!any_jumps(orig, delta1, delta2, b, king)){
             if(path.contains(",")){
                 jumps.add(new Move3(path));
@@ -134,48 +193,57 @@ public class CheckersGameState3{
             int jump = orig + 2 * delta1;
             int[] b2 = b.clone();
             b2[orig + delta1] = 0;
+            b2[orig + 2 * delta1] = b2 [orig];
+            b2[orig] = 0;
             calculate_jumps(path + "," + jump, b2, jump, delta1, delta2, jumps, king);
         }
         if(can_jump(orig, delta2, b)){
             int jump = orig + 2 * delta2;
             int[] b3 = b.clone();
             b3[orig + delta2] = 0;
+            b3[orig + 2 * delta2] = b3[orig];
+            b3[orig] = 0;
             calculate_jumps(path + "," + jump, b3, jump, delta1, delta2, jumps, king);
         }
         if(king && can_jump(orig, -1 * delta1, b)){
             int jump = orig + -2 * delta1;
             int[] b4 = b.clone();
             b4[orig + (-1 * delta1)] = 0;
+            b4[orig + (-2 * delta1)] = b4[orig];
+            b4[orig] = 0;
             calculate_jumps(path + "," + jump, b4, jump, delta1, delta2, jumps, king);
         }
         if(king && can_jump(orig, -1 * delta2, b)){
             int jump = orig + -2 * delta2;
             int[] b5 = b.clone();
             b5[orig + -1 * delta2] = 0;
+            b5[orig + (-2 * delta2)] = b5[orig];
+            b5[orig] = 0;
             calculate_jumps(path + "," + jump, b5, jump, delta1, delta2, jumps, king);
         }
     }
 
 
-    CheckersGameState3 result(Move3 x){
+    public CheckersGameState3 result(Move x){
         int[] newState = this.board.clone();
-        newState[x.destination()] = this.board[x.origin()];
-        newState[x.origin()] = 0;
-        if(x.destination < 4 &&  this.player == 2){
+        int type = this.board[x.source()];
+        newState[x.source()] = 0;
+        newState[x.destination()] = type;
+        if(x.destination() < 4 &&  this.player == 2){
             newState[x.destination()] = 4;
         }
         else if(x.destination() > 30 && this.player == 1){
            newState[x.destination()] = 3;
         }
-        if(x.kills() != null){
-            for(int k: x.kills()){
+        if(x.captures() != null){
+            for(int k: x.captures()){
                 newState[k] = 0;
             }
         }
         return new CheckersGameState3(1 - this.player, newState);
     }
 
-    void printState(){
+   public void printState(){
         boolean leading = false;
         int printed = 0;
         for(int i = 0; i < this.board.length; i++){
