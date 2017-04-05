@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 /*Sparse representation: The set of pieces is represented as a list of pieces and locations: each piece is
 represented by its token (one-character string) plus its board location (row, col).*/
 
@@ -13,9 +14,9 @@ public class CheckersGameState4 implements CheckersGameState{
   private ArrayList<Piece> _pieces;
   private int _player; //1 = black, 0 = white
 
-  public CheckersGameState4(int player){
+  public CheckersGameState4(){
     _pieces = new ArrayList<Piece>();
-    _player = player;
+    _player = 1;
     initPieces();
   }
   public CheckersGameState4(int player, ArrayList<Piece> pieces){
@@ -23,16 +24,20 @@ public class CheckersGameState4 implements CheckersGameState{
     _player = player;
   }
   public static void main(String[] args){ //for testing
-    CheckersGameState4 cg = new CheckersGameState4(0);
-    System.out.println(cg.player());
-    cg.printState();
-    System.out.println("");
-    for(Move move : cg.actions()){
-      System.out.println(move);
-      cg.result(move).printState();
-//      cg = cg.result(move);
-      System.out.println(cg);
-    }
+    Random r = new Random();
+    CheckersGameState4 state = new CheckersGameState4();
+    System.out.println("This is the initial board followed by an entire game played.");
+    System.out.println("We do this by always choosing a random move.");
+    state.printState();
+    List<Move> actions = state.actions();
+    while(actions.size() > 0){
+      for(Move move : actions) {
+        System.out.println(move+" ~~ ");
+      }
+    state = (CheckersGameState4)state.result(actions.get(r.nextInt(actions.size())));
+    state.printState();
+    actions = state.actions();
+  }
   }
 
   void initPieces(){
@@ -96,7 +101,6 @@ public class CheckersGameState4 implements CheckersGameState{
     ArrayList<Move> jumps = new ArrayList<Move>();
     ArrayList<Move> avail = new ArrayList<Move>();
     char[] neigh;
-    int[] jumpPath;
 
     for(Piece p: _pieces){
       if(samePlayer(_player, p._token)){
@@ -105,6 +109,8 @@ public class CheckersGameState4 implements CheckersGameState{
           if(neigh[i] == 'x') avail.add(new Move4(p, i));
             if(isJump(p._row, p._col, i, neigh)){
               System.out.println("Jump Available");
+              jumps.addAll(computeJumps(p, i, null));
+              System.out.println("" + jumps.isEmpty());
             }  //do something with this
            //check for jumps
         }
@@ -118,8 +124,9 @@ public class CheckersGameState4 implements CheckersGameState{
       if(oppPlayer(_player, neigh[index])){
         jumpto = dest(row, col, index);
         jumpto = dest(jumpto[0], jumpto[1], index);
-        if(spotContains(jumpto[0], jumpto[1])._empty) {
-          return true;
+        Piece item = spotContains(jumpto[0], jumpto[1]);
+        if(item!=null){
+          if(item._empty) return true;
         }
       }
       return false;
@@ -149,11 +156,11 @@ public class CheckersGameState4 implements CheckersGameState{
             Move4 newMove = new Move4(lastMove, neigh, dest(neigh, i));
             jumps.addAll(computeJumps(p, i, newMove));
           }
-          else {
-            jumps.add(last);
-          }
         }
       }
+    }
+    if(jumps.isEmpty()){
+      jumps.add(last);
     }
     return jumps;
   }
@@ -199,7 +206,10 @@ public class CheckersGameState4 implements CheckersGameState{
         return p;
       }
     }
-    return new Piece(true);
+    if(row >=0 && row<8 && col>=0 && col<8){
+      return new Piece(true);
+    }
+    return null;
   }
   //return resulting state from taking move x
   public CheckersGameState result (Move x){
