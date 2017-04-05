@@ -240,7 +240,16 @@ public class CheckersGameState3 implements CheckersGameState{
                 newState[k] = 0;
             }
         }
-        return new CheckersGameState3(1 - this.player, newState);
+        return new CheckersGameState3(other(this.player), newState);
+    }
+
+    private int other(int player){
+        if(player == 1){
+            return 2;
+        }
+        else{
+            return 1;
+        }
     }
 
    public void printState(){
