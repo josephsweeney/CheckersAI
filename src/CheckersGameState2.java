@@ -28,6 +28,18 @@ public class CheckersGameState2 implements CheckersGameState {
       state = (CheckersGameState2)state.result(actions.get(0));
       state.printState();
     }
+    int[] b = new int[32];
+    b[5] = 3;
+    b[8] = 2;
+    b[16] = 2;
+    b[17] = 2;
+    b[9] = 2;
+    CheckersGameState s = new CheckersGameState2(1, b);
+    s.printState();
+    for(Move m: s.actions()){
+        System.out.println(m);
+    }
+
   }
 
   public CheckersGameState2(int player, int[] board) {
