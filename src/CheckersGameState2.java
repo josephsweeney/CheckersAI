@@ -40,6 +40,7 @@ public class CheckersGameState2 implements CheckersGameState {
     for(Move m: s.actions()){
         System.out.println(m);
     }
+    s.result(s.actions().get(0)).printState();
 
   }
 
@@ -252,8 +253,9 @@ public class CheckersGameState2 implements CheckersGameState {
         newBoard[captures[i]] = 0;
       }
     }
-    newBoard[move.destination()] = newBoard[move.source()];
+    int s = newBoard[move.source()];
     newBoard[move.source()] = 0;
+    newBoard[move.destination()] = s;
 
     if(promote(move.source(), move.destination())) {
       newBoard[move.destination()] += 2;
