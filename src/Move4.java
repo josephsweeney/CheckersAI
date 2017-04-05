@@ -34,6 +34,10 @@ public class Move4 implements Move{
     return new int[2];
   }
 
+  public Piece[] capturedPieces(){
+    return null;
+  }
+
   // Returns the string representation of a move
   public String toString(){
     String output = "";

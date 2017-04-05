@@ -120,16 +120,36 @@ public class CheckersGameState4 implements CheckersGameState{
   //return resulting state from taking move x
   public CheckersGameState result (Move x){
     Move4 m = (Move4) x;
+    Piece[] captures = m.capturedPieces();
     //Piece[] pieces;
     if(m._path.length == 4){ //only src and dest
-      m._piece._row = m._path[2];   //is this actually changing the piece that belongs to _pieces?
-      m._piece._col = m._path[3];
-      if(m._path[2] == 7 && m._piece._token == 'w'){
-        m._piece._token = 'W'; //king me
+      ArrayList<Piece> newPieces = new ArrayList<Piece>();
+      for(Piece p : _pieces){
+        boolean addPiece = true;
+        if(p == m._piece) {
+          Piece clone = p.clone();
+          clone._row = m._path[2];   //is this actually changing the piece that belongs to _pieces?
+          clone._col = m._path[3];
+          if(m._path[2] == 7 && m._piece._token == 'w'){
+            clone._token = 'W'; //king me
+          }
+          if(m._path[2] == 0 && m._piece._token == 'b'){
+            clone._token = 'B'; //king me
+          }
+          newPieces.add(clone);
+          addPiece = false;
+        }
+        for(Piece c : captures) {
+          if(c==p){
+            addPiece = false;
+            break;
+          }
+        }
+        if(addPiece){
+          newPieces.add(p.clone());
+        }
       }
-      if(m._path[2] == 0 && m._piece._token == 'b'){
-        m._piece._token = 'B'; //king me
-      }
+      return new CheckersGameState4((_player+1)%2, newPieces);
     }
     //else consider jumps.
     //remove from array list if captured.

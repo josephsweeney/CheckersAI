@@ -8,4 +8,8 @@ class Piece{
     _row   = r;
     _col   = c;
   }
+
+  public Piece clone() {
+    return new Piece(_token, _row, _col);
+  }
 }
