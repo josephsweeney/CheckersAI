@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 public class CheckersGameState2 implements CheckersGameState {
 
-  // TODO: Fix king infinite recursion
-
   // 0 = empty
   // 1 = black piece
   // 2 = white piece
@@ -18,16 +16,19 @@ public class CheckersGameState2 implements CheckersGameState {
 
   public static void main(String args[]) {
     CheckersGameState2 state = new CheckersGameState2();
+    System.out.println("This is the initial board followed by an entire game played.");
+    System.out.println("We do this by always choosing the first move.");
     state.printState();
-    for(int i = 0; i<100; i++){
-      List<Move> actions = state.actions();
-      if(actions.size()==0){break;}
+    List<Move> actions = state.actions();
+    while(actions.size() > 0){
       for(Move move : actions) {
         System.out.println((Move2)move+" ~~ "+((Move2)move).destination());
       }
       state = (CheckersGameState2)state.result(actions.get(0));
       state.printState();
+      actions = state.actions();
     }
+    System.out.println("\n\nNow this tests a diamond movement edge case:");
     int[] b = new int[32];
     b[5] = 3;
     b[8] = 2;
