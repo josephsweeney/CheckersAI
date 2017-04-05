@@ -24,22 +24,27 @@ public class CheckersGameState4 implements CheckersGameState{
     _player = player;
   }
   public static void main(String[] args){ //for testing
-  //  Random r = new Random();
-  //  CheckersGameState4 state = new CheckersGameState4();
-  //  System.out.println("This is the initial board followed by an entire game played.");
-  //  System.out.println("We do this by always choosing a random move.");
-  //  state.printState();
-  //  List<Move> actions = state.actions();
-  //  while(actions.size() > 0){
-  //    for(Move move : actions) {
-  //      System.out.println(move+" ~~ ");
-  //    }
-  //  state = (CheckersGameState4)state.result(actions.get(r.nextInt(actions.size())));
-  //  state.printState();
-  //  actions = state.actions();
-  //}
+   Random r = new Random();
+   CheckersGameState4 state = new CheckersGameState4();
+   System.out.println("This is the initial board followed by an entire game played.");
+   System.out.println("We do this by always choosing a random move.");
+   state.printState();
+   List<Move> actions = state.actions();
+   while(actions.size() > 0){
+     System.out.println("Possible actions: ");
+     for(Move move : actions) {
+       System.out.println(move);
+     }
+
+   Move action = actions.get(r.nextInt(actions.size()));
+    System.out.println("Chosen action: " + action);
+   state = (CheckersGameState4)state.result(action);
+   state.printState();
+   actions = state.actions();
+  }
+    System.out.println("Diamond Test Case");
     ArrayList<Piece> p = new ArrayList<Piece>();
-    p.add(new Piece('b', 5, 2));
+    p.add(new Piece('B', 5, 2));
     p.add(new Piece('w', 4, 1));
     p.add(new Piece('w', 4, 3));
     p.add(new Piece('w', 2, 3));
@@ -49,6 +54,7 @@ public class CheckersGameState4 implements CheckersGameState{
     for(Move m: cg.actions()){
         System.out.println(m);
     }
+    //cg.printState();
 
   }
 
@@ -120,11 +126,8 @@ public class CheckersGameState4 implements CheckersGameState{
         for(int i = 0; i<4; i++){
           if(neigh[i] == 'x') avail.add(new Move4(p, i));
             if(isJump(p._row, p._col, i, neigh)){
-              System.out.println("Jump Available");
               jumps.addAll(computeJumps(p, i, null));
-              System.out.println("" + jumps.isEmpty());
-            }  //do something with this
-           //check for jumps
+            }
         }
       }
     }
@@ -138,7 +141,9 @@ public class CheckersGameState4 implements CheckersGameState{
         jumpto = dest(jumpto[0], jumpto[1], index);
         Piece item = spotContains(jumpto[0], jumpto[1]);
         if(item!=null){
-          if(item._empty) return true;
+          if(item._empty) {
+            return true;
+          }
         }
       }
       return false;
@@ -148,24 +153,28 @@ public class CheckersGameState4 implements CheckersGameState{
     int[] nextSpot = dest(p, neighborIndex);
     Piece captured = spotContains(nextSpot[0], nextSpot[1]);
     Move4 last = lastMove;
+    int saverow = p._row;
+    int savecol = p._col;
     if(last == null) {
       // This is the first jump
       // Make our move
       last = new Move4(p, dest(captured, neighborIndex), captured);
     }
+    p._row = -1;
+    p._col = -1;
     // Check to see if we can keep going
     // if we can, jumps.addAll(computeJumps(p, newgoodindex, nextMove))
     // else, add(nextMove)
     int lastRow = last._path[last._path.length-2];
-    int lastCol = last._path[last._path.length-2];
+    int lastCol = last._path[last._path.length-1];
     Piece[] newneighbors = neighborPieces(lastRow, lastCol, p);
     for(int i = 0; i<newneighbors.length; i++) {
       Piece neigh = newneighbors[i];
       if (neigh != null){
-        char[] nchars = neighbors(neigh);
+        char[] nchars = neighbors(lastRow, lastCol, p);
         if(isEnemy(neigh) && last.notCaptured(neigh)) {
           if(isJump(lastRow, lastCol, i, nchars)) {
-            Move4 newMove = new Move4(lastMove, neigh, dest(neigh, i));
+            Move4 newMove = new Move4(last, neigh, dest(neigh, i));
             jumps.addAll(computeJumps(p, i, newMove));
           }
         }
@@ -174,12 +183,18 @@ public class CheckersGameState4 implements CheckersGameState{
     if(jumps.isEmpty()){
       jumps.add(last);
     }
+    p._row = saverow;
+    p._col = savecol;
     return jumps;
   }
-  //return piece's 4 neighbors
+  //return piece's 4 neighbor tokens
   char[] neighbors(Piece p){
+    return neighbors(p._row, p._col, p);
+  }
+
+  char[] neighbors(int row, int col, Piece p){
     char[] neigh = new char[4];
-    Piece[] neighpieces = neighborPieces(p);
+    Piece[] neighpieces = neighborPieces(row, col, p);
     for(int i= 0; i<4; i++){
       if(neighpieces[i] != null){
         if(neighpieces[i]._empty) neigh[i] = 'x';
@@ -228,18 +243,18 @@ public class CheckersGameState4 implements CheckersGameState{
     Move4 m = (Move4) x;
     Piece[] captures = m.capturedPieces();
     //Piece[] pieces;
-    if(m._path.length == 4){ //only src and dest
+  //  if(m._path.length == 4){ //only src and dest
       ArrayList<Piece> newPieces = new ArrayList<Piece>();
       for(Piece p : _pieces){
         boolean addPiece = true;
         if(p == m._piece) {
           Piece clone = p.clone();
-          clone._row = m._path[m._path.length-2];   //is this actually changing the piece that belongs to _pieces?
+          clone._row = m._path[m._path.length-2];
           clone._col = m._path[m._path.length-1];
-          if(m._path[2] == 7 && m._piece._token == 'w'){
+          if(m._path[m._path.length-2] == 7 && m._piece._token == 'w'){
             clone._token = 'W'; //king me
           }
-          if(m._path[2] == 0 && m._piece._token == 'b'){
+          if(m._path[m._path.length-2] == 0 && m._piece._token == 'b'){
             clone._token = 'B'; //king me
           }
           newPieces.add(clone);
@@ -259,14 +274,15 @@ public class CheckersGameState4 implements CheckersGameState{
         }
       }
       return new CheckersGameState4((_player+1)%2, newPieces);
-    }
-    return null;
+    //}
+//    return null;
   }
   public void printState (){
     char[][] board = new char[8][8];
     for(Piece p: _pieces){
       board[p._row][p._col] = p._token;
     }
+    System.out.println("player: " + player());
     for(int i = 7; i>=0; i--){
       for(int j= 0; j<8; j++){
         if(board[i][j]== '\u0000') System.out.print("-");
@@ -274,5 +290,6 @@ public class CheckersGameState4 implements CheckersGameState{
       }
       System.out.println("");
     }
+      System.out.println("");
   }
 }
