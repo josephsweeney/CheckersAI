@@ -124,6 +124,7 @@ public class CheckersGameState2 implements CheckersGameState {
   private ArrayList<Move> findJumpMoves(int starting, int current, int[] path) {
     ArrayList<Move> moves = new ArrayList<Move>();
     int piece = board[starting];
+    board[starting] = 0;
     int[] neighbors = neighbors(current);
     int beg, end;
     if(piece == 1) {
@@ -154,6 +155,7 @@ public class CheckersGameState2 implements CheckersGameState {
         }
       }
     }
+    board[starting] = piece;
     return moves;
   }
 
