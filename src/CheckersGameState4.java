@@ -84,8 +84,39 @@ public class CheckersGameState4 implements CheckersGameState{
     return jumps;
   }
 
-  int[] computeJumps(Piece p, int i){
-    return null;
+  ArrayList<Move> computeJumps(Piece p, int neighborIndex, Move4 lastMove){
+    ArrayList<Move> jumps = new ArrayList<Move>();
+    int[] nextSpot = dest(p, neighborIndex);
+    Piece captured = spotContains(nextSpot[0], nextSpot[1]);
+    Move4 last = lastMove;
+    if(last == null) {
+      // This is the first jump
+      // Make our move
+      last = new Move4(p, dest(captured, neighborIndex), captured);
+    }
+    // Check to see if we can keep going
+    // if we can, jumps.addAll(computeJumps(p, newgoodindex, nextMove))
+    // else, add(nextMove)
+    int lastRow = last._path[last._path.length-2];
+    int lastCol = last._path[last._path.length-2];
+    Piece[] newneighbors = neighborPieces(lastRow, lastCol, p);
+    for(int i = 0; i<newneighbors.length; i++) {
+      Piece neigh = newneighbors[i];
+      if (neigh != null){
+        char[] nchars = neighbors(neigh);
+        if(isEnemy(neigh) && last.notCaptured(neigh)) {
+          if(isJump(lastRow, lastCol, i, nchars)) {
+            Move4 newMove = new Move4(lastMove, neigh, dest(neigh, i));
+            jumps.addAll(computeJumps(p, i, newMove));
+          }
+          else {
+            jumps.add(last);
+          }
+        }
+      }
+    }
+
+    return jump;
   }
 
   //return piece's 4 neighbors
