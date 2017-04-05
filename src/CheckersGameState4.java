@@ -24,20 +24,32 @@ public class CheckersGameState4 implements CheckersGameState{
     _player = player;
   }
   public static void main(String[] args){ //for testing
-    Random r = new Random();
-    CheckersGameState4 state = new CheckersGameState4();
-    System.out.println("This is the initial board followed by an entire game played.");
-    System.out.println("We do this by always choosing a random move.");
-    state.printState();
-    List<Move> actions = state.actions();
-    while(actions.size() > 0){
-      for(Move move : actions) {
-        System.out.println(move+" ~~ ");
-      }
-    state = (CheckersGameState4)state.result(actions.get(r.nextInt(actions.size())));
-    state.printState();
-    actions = state.actions();
-  }
+  //  Random r = new Random();
+  //  CheckersGameState4 state = new CheckersGameState4();
+  //  System.out.println("This is the initial board followed by an entire game played.");
+  //  System.out.println("We do this by always choosing a random move.");
+  //  state.printState();
+  //  List<Move> actions = state.actions();
+  //  while(actions.size() > 0){
+  //    for(Move move : actions) {
+  //      System.out.println(move+" ~~ ");
+  //    }
+  //  state = (CheckersGameState4)state.result(actions.get(r.nextInt(actions.size())));
+  //  state.printState();
+  //  actions = state.actions();
+  //}
+    ArrayList<Piece> p = new ArrayList<Piece>();
+    p.add(new Piece('b', 5, 2));
+    p.add(new Piece('w', 4, 1));
+    p.add(new Piece('w', 4, 3));
+    p.add(new Piece('w', 2, 3));
+    p.add(new Piece('w', 2, 1));
+    CheckersGameState4 cg = new CheckersGameState4(1, p);
+    cg.printState();
+    for(Move m: cg.actions()){
+        System.out.println(m);
+    }
+
   }
 
   void initPieces(){
