@@ -36,6 +36,12 @@ public class GameState1 implements CheckersGameState{
                 System.out.println(m);
             }
             g2.result(g2.actions().get(0)).printState();
+            CheckersGameState g3 = new GameState1(b3, true);
+            g3.printState();
+            for(Move m: g3.actions()){
+                System.out.println(m);
+            }
+            g3.result(g3.actions().get(0)).printState();
             System.out.println("This is initial board followed by entire game played");
             CheckersGameState state = new GameState1();
             state.printState();
