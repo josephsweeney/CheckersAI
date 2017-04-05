@@ -1,18 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Random;
 
 public class GameState1 implements CheckersGameState{
 
 	public static void main(String[] args){
 		//testing some methods
+            Random r = new Random();
 	            String[][] b3 = new String[8][8];
 			b3[4][2] = "B";
 			b3[3][1] = "w";
 			b3[1][1] = "w";
 			b3[1][3] = "w";
 			b3[3][3] = "w";
-			GameState1 g7 = new GameState1(b3,true);
+			CheckersGameState g7 = new GameState1(b3,true);
 			g7.printState();
 			List<Move> m6 = g7.actions();
 			for(Move m : m6){
@@ -25,6 +27,28 @@ public class GameState1 implements CheckersGameState{
                 System.out.println(m);
             }
             g1.result(g1.actions().get(0)).printState();
+            b3[5][3] = "w";
+            b3[6][4] = "b";
+            b3[4][2] = null;
+            CheckersGameState g2 = new GameState1(b3, false);
+            g2.printState();
+            for(Move m: g2.actions()){
+                System.out.println(m);
+            }
+            g2.result(g2.actions().get(0)).printState();
+            System.out.println("This is initial board followed by entire game played");
+            CheckersGameState state = new GameState1();
+            state.printState();
+            List<Move> actions = state.actions();
+            while(actions.size() > 0){
+                for(Move m: actions){
+                    System.out.println(m +" ~~ ");
+                }
+                state = state.result(actions.get(r.nextInt(actions.size())));
+                state.printState();
+                actions = state.actions();
+            }
+
 	}
 
 
