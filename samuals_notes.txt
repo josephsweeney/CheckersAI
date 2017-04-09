@@ -1,0 +1,70 @@
+Notes on "Some Studies in Machine Learning Using the Game of Checkers" - A. L. Samuel
+
+Learns in 10 hrs of playing. Starts with
+-rules of game
+-sense of direction
+-list of parameters
+
+Uses two different machine learning procedures: 
+1. Neural Net Approach: randomly connected switching net that is rewarded/punished results in learned behavior.
+2. Highly organized network designed to learn specific things. (more efficient)
+
+Checkers has: 
+no known algorithm to guarentee win/draw
+exploring every path in checkers - about 10^40 moves
+
+Performance Evaluation:
+- inability for one side or the other to move
+- piece ratio - look ahead until one side has gained a piece advantage
+- positional advantages - numerical measures of board positions added together (each with coefficient according to importance).
+ 
+Other things to consider in performance: 
+- usually advantagous to trade pieces when ahead in order to avoid trades when behind.
+- Kings weighted more than pieces - 3:2
+- will trade three men for two kings or two kings for three men to gain a positional advantage.
+
+Parameter adjustment options:
+1. rote-learning
+2. generalized: program itself selects and adjusts parameters and coefficients.
+
+
+Search:
+-looks ahead a minimum distance of 3
+-will evaluate board if the next move is a jump, the last move was a jump, or an exchange offer is possible 
+- will continue looking ahead
+- stops at 20 look aheads regardless of condition
+(see "ply" section for details)
+how to deal with 2 paths that lead to win but one is more direct:
+- "carry effective ply along with score"
+- chooses low ply if winning, and high-ply if losing
+
+Rote learning: 
+- saves all board positions encountered during play and their scores
+- references this memory
+- tested using an arbitrarily picked scoring polynomial and playing against itself
+- requires a lot of storage
+- learned to imitate master play during opening moves
+- poor during mid games
+- avoided opening traps
+- good for specialized cases
+
+Generalized learning:
+- good when there are large condition permutations. 
+- good when consequences of any actions come soon
+
+Combining the two:
+- save only limited amout of info during the early stages of learning
+- increase that amount when evaluation coefficient is more stable
+- or use generalization until more stable and then introduce rote learning. 
+
+Saving time:
+- catalog saved boards grouped into records by # pieces, precense of piece advantage and which side, whether there are kings on board, side with advantage, diagonal axes. cataloged by board positions
+- limit saved board positions by frequency of use and by ply
+- use an age term that is carried with the score. set this to arbritrary value when first saved. each time its referenced, age=age/2. at memory merge times, each board position is automatically aged by two. a board is "forgotten" when it reaches some maximum.
+- restrict max size of any one record. when limit reached, lowest ply board positions removed to bring size down
+- delete redundancies
+- remove board positions that are not of much value 
+
+polynomial coefficients:
+- if correlation coefficient ratio is greater than integer n but less than n+1, set the ratio to 2^n. 
+- some functions for computing weights ... (page 219)
