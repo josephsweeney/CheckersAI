@@ -93,7 +93,7 @@ public class RmCheckersClient {
       myClient.readAndEcho(); // opponent query
       myClient.writeMessageAndEcho(_opponent);  // opponent
 
-      myClient.setGameID(myClient.readAndEcho().substring(5,10)); // game
+      myClient.setGameID(myClient.readAndEcho()); // game
       myClient.setColor(myClient.readAndEcho().substring(6,11));  // color
       System.out.println("I am playing as "+myClient.getColor()+ " in game number "+ myClient.getGameID());
       readMessage = myClient.readAndEcho();
