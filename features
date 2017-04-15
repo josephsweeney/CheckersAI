@@ -1,0 +1,76 @@
+Checkers Features (in progress) 
+
+Sources looked at:
+https://pdfs.semanticscholar.org/91c9/d140267f3b008d00b330b6b0e9182fa4b62e.pdf
+http://www.cs.huji.ac.il/~ai/projects/old/English-Draughts.pdf
+
+Some features to consider for the Evaluation Fuction, these can be used
+as parameters, we need to decide which features we want to use and which ones
+are more important than others. We can't consider all of these in our function
+as it would take too much time.
+
+Basic features
+
+1. Number of Pawns
+2. Number of Kings
+3. Number of safe pawns - ones on the sides of the board that can't be captured
+4. Number of safe kings
+5. Number of moveable pawns - moves other than capture
+6. Number of moveable kings - moves other than capture
+7. Aggregated distance of the pawns to promotion line (total distance of all the pawns)
+8. Number of unoccupied spots on promotion line 
+
+**Kings would obviously have a greater weight than pawns becuase they are more valuable.
+If pawns value = 1, we could make king = 2
+
+Some more features to consider
+
+9.  Number of "defender" pieces (located in the lowermost 2 rows)
+10. Number of "attacking" pieces (located in the topmost 3 rows)
+11. Number of central pieces (located on the eight central squares of the board)
+12. Number of central kings
+13. Number of pawns on main diagonal
+14. Number of kings on main diagonal
+15. Number of pawns of double diagonal
+16. Number of kings on double diagonal 
+17. Number of "loner" pawns - not adjacent to any other pawn
+18. Number of "loner" kings
+19. Number of holes - empty squares adjacent to at least 3 pieces of the same color
+
+Some weird patterns to consider
+
+19. Triangle Pattern
+20. Oreo Pattern
+22. Bridge Pattern
+23. Dog Pattern
+24. Pawn in Corner 
+25. King in Corner
+
+**The paper didn't do a great job describing these patterns, still not really
+sure what the oreo and dog one is, there is a picture if you go to the first link
+
+Phases of the Evaluation - We can change our evaluation one time
+
+3 stages to consider:
+1. Beginning - each player has more than 3 pawns and no kings present
+2. Kings - each player has at least 3 pieces left and there is at least
+one king present
+3. End - one player less than or equal to 3 pieces left on the board
+
+**We only get to change one time, so we need to decide where the change will 
+be, and what will trigger the change. We can pick one of these places or
+make up our own, it seems it would be better to have a beginning/middle stage and 
+then end stage
+
+
+
+
+
+
+
+
+
+
+
+
+
