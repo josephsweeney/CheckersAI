@@ -252,6 +252,27 @@ public class CheckersGameState3 implements CheckersGameState{
         }
     }
 
+   public boolean myPiece(int i){
+      if(this.player == 1 && i == 1 || this.player == 1 && i == 3) //black
+        return true;
+      if(this.player == 0 && i == 2 || this.player == 0 && i == 4) //white
+        return true;
+      else return false;
+   }
+
+   public double pieceRatio(){
+     double total = 0.0;
+     double mypieces = 0.0;
+     for(int i = 0; i<this.board.length; i++){
+       if(i%9!=8){
+         if(this.board[i] != 0 )    total+=1.0;
+         if(myPiece(this.board[i])) mypieces+=1.0;
+       }
+     }
+     //System.out.println("" + mypieces);
+     return mypieces/total;
+   }
+
    public void printState(){
         boolean leading = false;
         int printed = 0;
@@ -274,5 +295,3 @@ public class CheckersGameState3 implements CheckersGameState{
         System.out.print("\n");
     }
 }
-
-

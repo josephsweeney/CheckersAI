@@ -1,5 +1,5 @@
 public interface Evaluator{
 
-    int evaluate(CheckersGameState s);
+    double evaluate(CheckersGameState s);
 
 }
