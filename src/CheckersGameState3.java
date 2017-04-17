@@ -11,6 +11,20 @@ public class CheckersGameState3 implements CheckersGameState{
         this.board = board;
     }
 
+    public CheckersGameState3() {
+      this.player = 1;
+      this.board = new int[]{
+        1,1,1,1,
+        1,1,1,1,0,
+        1,1,1,1,
+        0,0,0,0,0,
+        0,0,0,0,
+        2,2,2,2,0,
+        2,2,2,2,
+        2,2,2,2
+      };
+    }
+
     public CheckersGameState3(int player, String[] board){
         this.player = player;
         this.board = to_array(board);

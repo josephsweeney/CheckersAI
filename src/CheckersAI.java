@@ -19,7 +19,7 @@ public class CheckersAI{
         double v = Double.NEGATIVE_INFINITY;
         double check;
         Move max = null;
-        System.out.println(s.actions().size());
+        // System.out.println(s.actions().size());
         for(Move a: s.actions()){
             check = minValue(s.result(a), alpha, beta, ply, depth + 1);
             if(check > v){
