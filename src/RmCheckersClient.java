@@ -144,7 +144,7 @@ public class RmCheckersClient {
         readAndEcho(); // move query
       }
       while(currentState.actions().size()>0){
-        Move myMove = ai.minimax(currentState, 3);
+        Move myMove = ai.minimax(currentState, 8);
         writeMessageAndEcho(myMove.toString());
         if(!applyMove(myMove.toString())) {
           System.out.println("couldn't apply my move");
@@ -171,7 +171,6 @@ public class RmCheckersClient {
 
   public boolean applyMove(String move) {
     for(Move m : currentState.actions()) {
-      System.out.println(move+" equals? "+m.toString());
       if(move.equals(m.toString())) {
         currentState = currentState.result(m);
         return true;
