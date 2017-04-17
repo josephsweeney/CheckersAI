@@ -3,9 +3,9 @@
 
 public class Evaluator00 implements Evaluator {
 
-    public double evaluate(CheckersGameState s){
+    public double evaluate(CheckersGameState s, int player){
       CheckersGameState3 gs = (CheckersGameState3) s;
-      return gs.pieceRatio();
+      return gs.pieceRatio(player);
     }
 
 }

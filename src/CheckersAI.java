@@ -2,35 +2,42 @@ public class CheckersAI{
 
 
     Evaluator eval;
+    int player;
 
     public CheckersAI(Evaluator e, int player){
         this.eval = e;
+        this.player = player;
     }
 
     public Move minimax(CheckersGameState s, int ply){
-        double alpha = Double.POSITIVE_INFINITY;
-        double beta = Double.NEGATIVE_INFINITY;
+        int depth = 0;
+        if(s.isTerminal() || depth == ply){
+            return null;
+        }
+        double alpha = Double.NEGATIVE_INFINITY;
+        double beta = Double.POSITIVE_INFINITY;
         double v = Double.NEGATIVE_INFINITY;
         double check;
-        Move max;
+        Move max = null;
+        System.out.println(s.actions().size());
         for(Move a: s.actions()){
             check = minValue(s.result(a), alpha, beta, ply, depth + 1);
             if(check > v){
                 v = check;
                 max = a;
             }
-            if(v > beta){
+            alpha = Math.max(alpha, v);
+            if(alpha >= beta){
                 return max;
             }
-            alpha = Math.max(alpha, v);
         }
-        returm max;
+        return max;
     }
 
    private double maxValue(CheckersGameState s, double alpha, double beta, int ply, int depth){
 
-      if(s.isTerminal() || depth == ply){
-         return eval.evaluate(s); // if terminal, piece ratio should be infinite
+        if(s.isTerminal() || depth == ply){
+         return eval.evaluate(s, this.player); // if terminal, piece ratio should be infinite
         }
         double v = Double.NEGATIVE_INFINITY;
         double check;
@@ -39,18 +46,18 @@ public class CheckersAI{
             if(check > v){
                 v = check;
             }
-            if (v >= beta){
+            alpha  = Math.max(alpha, v);
+            if (alpha >= beta){
                return v;
             }
-            alpha  = Math.max(alpha, v);
-            }
+        }
         return v;
     }
 
    private double minValue(CheckersGameState s, double alpha, double beta, int ply, int depth){
 
        if(s.isTerminal() || depth == ply){
-           return eval.evaluate(s);
+           return eval.evaluate(s, this.player);
         }
        double v = Double.POSITIVE_INFINITY;
        double check;
@@ -59,10 +66,10 @@ public class CheckersAI{
            if(check < v){
                v = check;
             }
-           if( v <= alpha){
+           beta = Math.min(beta, v);
+           if( beta <= alpha){
                return v;
             }
-           beta = Math.min(beta, v);
         }
        return v;
     }
