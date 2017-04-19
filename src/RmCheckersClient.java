@@ -32,11 +32,12 @@ import java.net.*;
 
 public class RmCheckersClient {
 
-  protected final static String _user1 = "9";
-  protected final static String _password1 = "919747";
-  protected final static String _user2 = "10";
-  protected final static String _password2 = "183220";
-  protected final static String _opponent = "0";
+  public final static String _user1 = "9";
+  public final static String _password1 = "919747";
+  public final static String _user2 = "10";
+  public final static String _password2 = "183220";
+  public String user, password,opponent;
+  public final static String _opponent = "0";
   protected final String _machine  = "icarus.engr.uconn.edu";
   protected int _port = 3499;
   protected Socket _socket = null;
@@ -54,6 +55,18 @@ public class RmCheckersClient {
     _socket = openSocket();
     e = new Evaluator00();
     currentState = new CheckersGameState3();
+    user = _user1;
+    password = _password1;
+    opponent = _opponent;
+  }
+
+  public RmCheckersClient(int player, String opponent){
+    _socket = openSocket();
+    e = new Evaluator00();
+    currentState = new CheckersGameState3();
+    user = player==1 ? _user1 : _user2;
+    password = player==1 ? _password1 : _password2;
+    this.opponent = opponent;
   }
 
   public Socket getSocket(){
@@ -84,47 +97,49 @@ public class RmCheckersClient {
     return _myColor;
   }
 
-  public static void main(String[] argv){
+  public int connectGetPlayer() {
     String readMessage;
-    RmCheckersClient myClient = new RmCheckersClient();
 
     try{
-      myClient.readAndEcho(); // start message
-      myClient.readAndEcho(); // ID query
-      myClient.writeMessageAndEcho(_user1); // user ID
+      this.readAndEcho(); // start message
+      this.readAndEcho(); // ID query
+      this.writeMessageAndEcho(this.user); // user ID
 
-      myClient.readAndEcho(); // password query
-      myClient.writeMessage(_password1);  // password
+      this.readAndEcho(); // password query
+      this.writeMessage(this.password);  // password
 
-      myClient.readAndEcho(); // opponent query
-      myClient.writeMessageAndEcho(_opponent);  // opponent
+      this.readAndEcho(); // opponent query
+      this.writeMessageAndEcho(this.opponent);  // opponent
 
-      myClient.setGameID(myClient.readAndEcho()); // game
-      myClient.setColor(myClient.readAndEcho().substring(6,11));  // color
-      System.out.println("I am playing as "+myClient.getColor()+ " in "+ myClient.getGameID());
-      // readMessage = myClient.readAndEcho();
-      // depends on color--a black move if i am white, Move:Black:i:j
-      // otherwise a query to move, ?Move(time):
-      if (myClient.getColor().equals("White")) {
-        myClient.ai = new CheckersAI(myClient.e, 2);
-        myClient.playGame(2);
-        // readMessage = myClient.readAndEcho();  // move query
-        // myClient.writeMessageAndEcho("(2:4):(3:5)");
-        // readMessage = myClient.readAndEcho();  // white move
-        // readMessage = myClient.readAndEcho();  // black move
-        // readMessage = myClient.readAndEcho();  // move query
-        // here you would need to move again
+      this.setGameID(this.readAndEcho()); // game
+      this.setColor(this.readAndEcho().substring(6,11));  // color
+      System.out.println("I am playing as "+this.getColor()+ " in "+ this.getGameID());
+      if (this.getColor().equals("White")) {
+        this.ai = new CheckersAI(this.e, 2);
+        return 2;
       }
       else {
-        myClient.ai = new CheckersAI(myClient.e, 1);
-        myClient.playGame(1);
-        // myClient.writeMessageAndEcho("(5:3):(4:4)");
-        // readMessage = myClient.readAndEcho();  // move query
-        // readMessage = myClient.readAndEcho();  // black move
-        // readMessage = myClient.readAndEcho();  // white move
-        // here you would need to move again
+        this.ai = new CheckersAI(this.e, 1);
+        return 1;
       }
+    } catch  (IOException e) {
+      System.out.println("Failed in read/close");
+      return 0;
+    }
+  }
 
+  public static void main(String[] argv){
+    String readMessage;
+    if(argv.length != 2) {
+      System.out.println("error! please specify your player(1 or 2) and the opponent");
+      return;
+    }
+    int myUser = Integer.parseInt(argv[0]);
+    RmCheckersClient myClient = new RmCheckersClient(myUser, argv[1]);
+
+    try{
+      int player = myClient.connectGetPlayer();
+      myClient.playGame(player);
       myClient.getSocket().close();
     } catch  (IOException e) {
       System.out.println("Failed in read/close");
@@ -153,12 +168,20 @@ public class RmCheckersClient {
         }
         msg = readAndEcho(); // my move
         msg = readAndEcho(); // their move
+        if(msg.contains("Result")) {
+          System.out.println("Done.");
+          break;
+        }
         boolean success = applyMove(parseMove(msg)); // apply their move
         if(!success){
           System.out.println("couldn't apply their move");
           break;
         }
         msg = readAndEcho(); // move query
+        if(msg.contains("Result")) {
+          System.out.println("Done.");
+          break;
+        }
       }
     } catch  (IOException e) {
       System.out.println("Failed in read/close");
