@@ -130,7 +130,7 @@ public class CheckersGameState3 implements CheckersGameState{
         if(this.player == 1){
             return "black";
         }
-        else{
+        else{ //this.player == 2
             return "white";
         }
     }
@@ -171,6 +171,20 @@ public class CheckersGameState3 implements CheckersGameState{
 
     private boolean can_move(int orig, int delta, int[] board){
         return (valid_square(orig + delta) && empty(board, orig + delta));
+    }
+
+    private boolean pawn_can_move(int index){
+        int delta = 1; //black
+        if(player == 2) delta = -1; //white
+        return (valid_square(index+(delta*4)) && empty(board, index+(delta*4))) ||
+               (valid_square(index+(delta*5)) && empty(board, index+(delta*5)))
+    }
+
+    private boolean king_can_move(int index){
+        return (valid_square(index+4) && empty(board, index+4)) ||
+        (valid_square(index+5) && empty(board, index+5)) ||
+        (valid_square(index-4) && empty(board, index-4)) ||
+        (valid_square(index-5) && empty(board, index-5))
     }
 
     private boolean can_jump(int orig, int delta, int[] board){
@@ -315,6 +329,7 @@ public class CheckersGameState3 implements CheckersGameState{
         }
     }
 
+    /* does the piece belongs to the given player */
    public boolean myPiece(int i, int player){
         if(i == player || i == player +2){
             return true;
@@ -322,33 +337,60 @@ public class CheckersGameState3 implements CheckersGameState{
         else{
             return false;
         }
-      ///if(this.player == 1 && i == 1 || this.player == 1 && i == 3) //black
-      ///  return true;
-      ///if(this.player == 0 && i == 2 || this.player == 0 && i == 4) //white
-      ///  return true;
-      ///else return false;
    }
-
+   //remove this method once getFeatures is up and running
    public double pieceRatio(int player){
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){
          if(myPiece(this.board[i], player)) mypieces+=1.0;
-         else if(this.board[i] != 0 )    total+=1.0;
+         if(this.board[i] != 0 )    total+=1.0;
        }
      }
-     //System.out.println("" + mypieces);
      return mypieces/total;
    }
 
-   //features
+   /* computes feature vector:
+      piece-ratio, loners, safes, pawns,
+      moveable pawns, kings, moveable kings
+   */
+   public double[] getFeatures(int player){
+     double[] features = new double[7];
+     double total = 0.0;
+     double mypieces = 0.0;
+     for(int i = 0; i<this.board.length; i++){
+       if(i%9!=8){                                  //valid square
+         if(this.board[i] != 0 ) total+=1.0;
+         if(myPiece(this.board[i], player)){
+           mypieces+=1.0;
+           if(isLoner(i)) features[1] +=1.0;
+           if(isSafe(i))  features[2] +=1.0;
+           if(this.board[i]) == player){            //pawn
+              features[3]+=1.0;
+              if(pawn_can_move(i)) features[4] += 1.0;
+           }
+           else if(this.board[i]) == player+2){     //king
+             features[5]+=1.0;
+             if(king_can_move(i)) features[6] += 1.0;
+         }
+       }
+     }
+     features[0] = mypieces/total;
+     return features;
+   }
+
+
+   /*feature: piece has no neighbors*/
    public boolean isLoner(int pos){
 	   if(this.board[pos-5] == 0 && this.board[pos-4] ==0 && this.board[pos+4] ==0 && this.board[pos+5] ==0){
 		   return true;
 	   }
 	   return false;
    }
+
+   /* feature: a piece cannot be captured since it is
+   is on left-most or right-most column on board*/
    public boolean isSafe(int pos){
 	   if(pos%9==4 || pos%9==3){
 		   return true;
