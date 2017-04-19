@@ -37,6 +37,10 @@ public class Move3 implements Move{
         return kills;
     }
 
+    public boolean isJump(){
+        return this.kills != null;
+    }
+
 //    private String convert(int pos){
 //        int x;
 //        int y;

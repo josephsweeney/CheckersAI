@@ -144,6 +144,7 @@ public class RmCheckersClient {
         readAndEcho(); // move query
       }
       while(currentState.actions().size()>0){
+        currentState.printState();
         Move myMove = ai.minimax(currentState, 8);
         writeMessageAndEcho(myMove.toString());
         if(!applyMove(myMove.toString())) {
