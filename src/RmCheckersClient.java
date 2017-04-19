@@ -148,6 +148,7 @@ public class RmCheckersClient {
   }
 
   public void playGame(int player) {
+    int minPly = 8;
     try {
       String msg = readAndEcho(); // initial message
       if(player == 1) { // black
@@ -160,7 +161,7 @@ public class RmCheckersClient {
       }
       while(currentState.actions().size()>0){
         currentState.printState();
-        Move myMove = ai.minimax(currentState, 8);
+        Move myMove = ai.minimax(currentState, minPly);
         writeMessageAndEcho(myMove.toString());
         if(!applyMove(myMove.toString())) {
           System.out.println("couldn't apply my move");
