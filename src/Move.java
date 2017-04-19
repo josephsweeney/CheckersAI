@@ -7,4 +7,7 @@ public interface Move {
   // Returns the string representation of a move
   public String toString();
 
+  boolean isJump();
+
+
 }

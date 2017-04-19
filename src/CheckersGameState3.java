@@ -5,10 +5,13 @@ public class CheckersGameState3 implements CheckersGameState{
 
     int player;
     int[] board;
+    List<Move> actions;
 
     public CheckersGameState3(int player, int[] board){
         this.player = player;
         this.board = board;
+        //System.out.println(this.moves());
+        this.actions = this.moves();
     }
 
     public CheckersGameState3() {
@@ -23,14 +26,53 @@ public class CheckersGameState3 implements CheckersGameState{
         2,2,2,2,
         2,2,2,2
       };
+      this.actions = this.moves();
     }
 
     public CheckersGameState3(int player, String[] board){
         this.player = player;
         this.board = to_array(board);
+        this.actions = this.moves();
     }
 
-    public int convert(String s){
+
+    boolean canJump(){
+        //System.out.println(this.moves);
+        return (this.actions.size() > 0 && this.actions.get(0).isJump());
+    }
+
+    boolean canExchange(){
+        if(canJump()){
+            for(Move m: this.actions){
+                if(m.captures().length == 1){
+                    for(Move n: this.result(m).actions()){
+                        if(n.captures().length == 1){
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    boolean twoKings(){
+        int bkings = 0;
+        int wkings = 0;
+        for(int i = 0; i < board.length; i++){
+            if(board[i] == 3){
+                bkings++;
+            }
+            else if(board[i] == 4){
+                wkings++;
+            }
+        }
+        return Math.abs(bkings - wkings) >= 2;
+    }
+
+
+        public int convert(String s){
         if(s.equals("-")){
             return 0;
         }
@@ -144,6 +186,11 @@ public class CheckersGameState3 implements CheckersGameState{
     }
 
     public List<Move> actions(){
+        return this.actions;
+    }
+
+
+    public List<Move> moves(){
         LinkedList<Move> moves = new LinkedList<Move>();
         LinkedList<Move> jumps = new LinkedList<Move>();
         for(int i = 0; i < this.board.length; i++){
@@ -166,6 +213,8 @@ public class CheckersGameState3 implements CheckersGameState{
                 }
             }
         }
+        //System.out.println(jumps);
+        //System.out.println(moves);
         if(jumps.isEmpty()){
             return moves;
         }
@@ -285,8 +334,8 @@ public class CheckersGameState3 implements CheckersGameState{
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){
-         if(this.board[i] != 0 )    total+=1.0;
          if(myPiece(this.board[i], player)) mypieces+=1.0;
+         else if(this.board[i] != 0 )    total+=1.0;
        }
      }
      //System.out.println("" + mypieces);
@@ -309,7 +358,7 @@ public class CheckersGameState3 implements CheckersGameState{
 
    public boolean isTerminal(){
        double rat = pieceRatio(this.player);
-       return (rat == 0 || rat == 1);
+       return (rat == 0 || rat == Double.POSITIVE_INFINITY);
     }
 
    public void printState(){
