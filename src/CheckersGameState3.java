@@ -292,7 +292,7 @@ public class CheckersGameState3 implements CheckersGameState{
      //System.out.println("" + mypieces);
      return mypieces/total;
    }
-   
+
    //features
    public boolean isLoner(int pos){
 	   if(this.board[pos-5] == 0 && this.board[pos-4] ==0 && this.board[pos+4] ==0 && this.board[pos+5] ==0){
@@ -301,12 +301,12 @@ public class CheckersGameState3 implements CheckersGameState{
 	   return false;
    }
    public boolean isSafe(int pos){
-	   if(this.board[pos%9==4] || this.board[pos%9==3]){
+	   if(pos%9==4 || pos%9==3){
 		   return true;
 	   }
 	   return false;
    }
-   
+
    public boolean isTerminal(){
        double rat = pieceRatio(this.player);
        return (rat == 0 || rat == 1);
