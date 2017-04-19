@@ -9,21 +9,24 @@ public class CheckersAI{
         this.player = player;
     }
 
-    private boolean stop(CheckersGameState state, boolean jumped, int depth){
+    private boolean stop(CheckersGameState state, boolean jumped, int depth, int min_ply){
         CheckersGameState3 s = (CheckersGameState3) state;
-        if(!s.canJump() && !jumped && !s.canExchange() && depth == 3){
+        if(depth < min_ply){
+            return false;
+        }
+        else if(depth == min_ply && !s.canJump() && !jumped && !s.canExchange()){
            return true;
         }
-        else if(!s.canJump() && !s.canExchange() && depth == 4){
+        else if(depth == min_ply +1 && !s.canJump() && !s.canExchange() && depth == 4){
             return true;
         }
-        else if(depth < 11 && !s.canJump()){
+        else if(depth > min_ply +1 && depth < min_ply + 10  && !s.canJump()){
             return true;
         }
-        else if(depth < 20 && s.twoKings()){
+        else if(depth > min_ply +10 && depth < min_ply + 20 && s.twoKings()){
             return true;
         }
-        else if(depth >=  20){
+        else if(depth >=  min_ply + 20){
             return true;
         }
         else{
@@ -31,7 +34,7 @@ public class CheckersAI{
         }
     }
 
-    public Move minimax(CheckersGameState s){
+    public Move minimax(CheckersGameState s, int min_ply){
         int depth = 0;
         if(s.isTerminal()){
             return null;
@@ -43,7 +46,7 @@ public class CheckersAI{
         Move max = null;
         // System.out.println(s.actions().size());
         for(Move a: s.actions()){
-            check = minValue(s.result(a), alpha, beta, depth + 1, a.isJump());
+            check = minValue(s.result(a), alpha, beta, depth + 1, a.isJump(), min_ply);
             if(check > v){
                 v = check;
                 max = a;
@@ -56,15 +59,14 @@ public class CheckersAI{
         return max;
     }
 
-   private double maxValue(CheckersGameState s, double alpha, double beta, int depth, boolean jumped){
-
-        if(s.isTerminal() || stop(s, jumped, depth)){
-         return eval.evaluate(s, this.player); // if terminal, piece ratio should be infinite
+   private double maxValue(CheckersGameState s, double alpha, double beta, int depth, boolean jumped, int min_ply){
+        if(s.isTerminal() || stop(s, jumped, depth, min_ply)){
+             return eval.evaluate(s, this.player); // if terminal, piece ratio should be infinite
         }
         double v = Double.NEGATIVE_INFINITY;
         double check;
         for(Move a: s.actions()){
-            check = minValue(s.result(a), alpha, beta, depth + 1, a.isJump());
+            check = minValue(s.result(a), alpha, beta, depth + 1, a.isJump(), min_ply);
             if(check > v){
                 v = check;
             }
@@ -76,15 +78,14 @@ public class CheckersAI{
         return v;
     }
 
-   private double minValue(CheckersGameState s, double alpha, double beta, int depth, boolean jumped){
-
-       if(s.isTerminal() || stop(s, jumped, depth)){
+   private double minValue(CheckersGameState s, double alpha, double beta, int depth, boolean jumped, int min_ply){
+       if(s.isTerminal() || stop(s, jumped, depth, min_ply)){
            return eval.evaluate(s, this.player);
         }
        double v = Double.POSITIVE_INFINITY;
        double check;
        for(Move a: s.actions()){
-           check = maxValue(s.result(a), alpha, beta, depth + 1, a.isJump());
+           check = maxValue(s.result(a), alpha, beta, depth + 1, a.isJump(), min_ply);
            if(check < v){
                v = check;
             }

@@ -38,7 +38,7 @@ public class CheckersGameState3 implements CheckersGameState{
 
     boolean canJump(){
         //System.out.println(this.moves);
-        return this.actions.get(0).isJump();
+        return (this.actions.size() > 0 && this.actions.get(0).isJump());
     }
 
     boolean canExchange(){

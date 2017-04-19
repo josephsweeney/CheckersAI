@@ -145,7 +145,7 @@ public class RmCheckersClient {
       }
       while(currentState.actions().size()>0){
         currentState.printState();
-        Move myMove = ai.minimax(currentState);
+        Move myMove = ai.minimax(currentState, 8);
         writeMessageAndEcho(myMove.toString());
         if(!applyMove(myMove.toString())) {
           System.out.println("couldn't apply my move");
