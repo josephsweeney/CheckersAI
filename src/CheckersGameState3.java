@@ -177,14 +177,14 @@ public class CheckersGameState3 implements CheckersGameState{
         int delta = 1; //black
         if(player == 2) delta = -1; //white
         return (valid_square(index+(delta*4)) && empty(board, index+(delta*4))) ||
-               (valid_square(index+(delta*5)) && empty(board, index+(delta*5)))
+               (valid_square(index+(delta*5)) && empty(board, index+(delta*5)));
     }
 
     private boolean king_can_move(int index){
         return (valid_square(index+4) && empty(board, index+4)) ||
         (valid_square(index+5) && empty(board, index+5)) ||
         (valid_square(index-4) && empty(board, index-4)) ||
-        (valid_square(index-5) && empty(board, index-5))
+        (valid_square(index-5) && empty(board, index-5));
     }
 
     private boolean can_jump(int orig, int delta, int[] board){
@@ -366,19 +366,21 @@ public class CheckersGameState3 implements CheckersGameState{
            mypieces+=1.0;
            if(isLoner(i)) features[1] +=1.0;
            if(isSafe(i))  features[2] +=1.0;
-           if(this.board[i]) == player){            //pawn
+           if(this.board[i] == player){            //pawn
               features[3]+=1.0;
               if(pawn_can_move(i)) features[4] += 1.0;
            }
-           else if(this.board[i]) == player+2){     //king
+           else if(this.board[i] == player+2){     //king
              features[5]+=1.0;
              if(king_can_move(i)) features[6] += 1.0;
          }
        }
      }
+   }
      features[0] = mypieces/total;
      return features;
    }
+
 
 
    /*feature: piece has no neighbors*/
