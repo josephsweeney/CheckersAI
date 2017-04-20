@@ -1,9 +1,12 @@
 
 public class BaseEvaluator implements Evaluator{
 
-    WeightsParser wp;
+    // meant for beta to use
+    // when beta should use alpha's weights, have alpha commit to beta.csv and then call refreshWeights()
+
+    protected WeightsParser wp;
     String file;
-    double[] weights;
+    protected double[] weights;
 
     public BaseEvaluator(String file){
         this.wp = new WeightsParser();
@@ -11,7 +14,7 @@ public class BaseEvaluator implements Evaluator{
         this.weights = this.wp.getWeights(file);
     }
 
-    private double dot(double[] a1, double[] a2){
+    private double dot(double[] a1, double[] a2){ // function for dot product
         double res = 0;
         for(int i = 0; i < a1.length; i++){
             res += (a1[i] * a2[i]);
@@ -22,6 +25,10 @@ public class BaseEvaluator implements Evaluator{
     public double evaluate(CheckersGameState s, int player){
         double[] params = s.getFeatures(player);
         return dot(this.weights, params);
+    }
+
+    public void refreshWeights(){
+        this.weights = this.wp.getWeights(this.file);
     }
 
 
