@@ -351,12 +351,36 @@ public class CheckersGameState3 implements CheckersGameState{
      return mypieces/total;
    }
 
+   /* distance to promotion line */
+   public int getDistance(int i){
+     int row = (i-(i/9))/4;
+     if(player == 1) return 7-row;
+     else            return row;
+   }
+
+   private double promotionLineOpenings(int player){
+     double sum =0.0;
+     if(player == 1){
+       for(int i = 31; i<35; i++) {
+         if(empty(board,i)) sum +=1.0;
+       }
+     }
+     else if(player == 2){
+       for(int i = 0; i<4; i++){
+         if(empty(board,i)) sum +=1.0;
+       }
+     }
+     return sum;
+   }
+
    /* computes feature vector:
       piece-ratio, loners, safes, pawns,
-      moveable pawns, kings, moveable kings
+      moveable pawns, aggregate distance,
+      kings, moveable kings, promotion line
+      opening
    */
    public double[] getFeatures(int player){
-     double[] features = new double[7];
+     double[] features = new double[9];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
@@ -369,31 +393,41 @@ public class CheckersGameState3 implements CheckersGameState{
            if(this.board[i] == player){            //pawn
               features[3]+=1.0;
               if(pawn_can_move(i)) features[4] += 1.0;
+              features[5] += getDistance(i);       //aggregate distance
            }
            else if(this.board[i] == player+2){     //king
-             features[5]+=1.0;
-             if(king_can_move(i)) features[6] += 1.0;
+             features[6]+=1.0;
+             if(king_can_move(i)) features[7] += 1.0;
          }
        }
      }
    }
      features[0] = mypieces/total;
+     features[8] = promotionLineOpenings(player);
      return features;
    }
 
-
-
    /*feature: piece has no neighbors*/
-   public boolean isLoner(int pos){
-	   if(this.board[pos-5] == 0 && this.board[pos-4] ==0 && this.board[pos+4] ==0 && this.board[pos+5] ==0){
-		   return true;
-	   }
-	   return false;
+   private boolean isLoner(int index){
+     if(valid_square(index-5)){
+        if(!empty(board, index-5)) return false;
+     }
+     if(valid_square(index+5)){
+        if(!empty(board, index+5)) return false;
+     }
+     if(valid_square(index-4)){
+       if(!empty(board, index-4))  return false;
+     }
+     if(valid_square(index+4)){
+        if(!empty(board, index+4)) return false;
+     }
+     System.out.println("loner found at index " + index);
+     return true;
    }
 
    /* feature: a piece cannot be captured since it is
    is on left-most or right-most column on board*/
-   public boolean isSafe(int pos){
+   private boolean isSafe(int pos){
 	   if(pos%9==4 || pos%9==3){
 		   return true;
 	   }
