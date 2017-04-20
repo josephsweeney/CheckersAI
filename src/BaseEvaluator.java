@@ -5,7 +5,7 @@ public class BaseEvaluator implements Evaluator{
     // when beta should use alpha's weights, have alpha commit to beta.csv and then call refreshWeights()
 
     protected WeightsParser wp;
-    String file;
+    protected String file;
     protected double[] weights;
 
     public BaseEvaluator(String file){
