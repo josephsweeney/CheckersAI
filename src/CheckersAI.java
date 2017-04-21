@@ -9,6 +9,14 @@ public class CheckersAI{
         this.player = player;
     }
 
+    public void setPlayer(int player){
+        this.player = player;
+    }
+
+    public int getPlayer(){
+        return this.player;
+    }
+
     private boolean stop(CheckersGameState state, boolean jumped, int depth, int min_ply){
         CheckersGameState3 s = (CheckersGameState3) state;
         if(depth < min_ply){
@@ -56,6 +64,7 @@ public class CheckersAI{
                 return max;
             }
         }
+        max.setValue(v);
         return max;
     }
 

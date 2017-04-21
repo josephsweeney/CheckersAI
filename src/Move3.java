@@ -4,6 +4,7 @@ public class Move3 implements Move{
     String[] steps;
     int[] kills;
     String check;
+    double value = 0;
 
     public Move3(String steps){
         String[] s = steps.split(",");
@@ -23,6 +24,14 @@ public class Move3 implements Move{
            k[i] = (Integer.parseInt(steps[i]) + Integer.parseInt(steps[i+1]))/2;
         }
         return k;
+    }
+
+    public void setValue(double value){
+        this.value = value;
+    }
+
+    public double getValue(){
+        return this.value;
     }
 
     public int source(){

@@ -23,6 +23,14 @@ public class BaseEvaluator implements Evaluator{
     }
 
     public double evaluate(CheckersGameState s, int player){
+        if(s.isTerminal()){
+            if(s.winner() == player){
+                return 1000; // what should this be?
+            }
+            else{
+                return 0; // assuming only positive evalutions
+            }
+        }
         double[] params = s.getFeatures(player);
         return dot(this.weights, params);
     }

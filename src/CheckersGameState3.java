@@ -421,7 +421,6 @@ public class CheckersGameState3 implements CheckersGameState{
      if(valid_square(index+4)){
         if(!empty(board, index+4)) return false;
      }
-     System.out.println("loner found at index " + index);
      return true;
    }
 
@@ -437,6 +436,18 @@ public class CheckersGameState3 implements CheckersGameState{
    public boolean isTerminal(){
        double rat = pieceRatio(this.player);
        return (rat == 0 || rat == Double.POSITIVE_INFINITY);
+    }
+
+   public int winner(){ // only call after isTerminal
+       for(int i = 0; i < board.length; i++){
+           if(board[i] == 1 ||  board[i] == 3){
+               return 1;
+            }
+           else if(board[i] == 2 || board[i] == 4){
+               return 2;
+            }
+        }
+       return 0;
     }
 
    public void printState(){

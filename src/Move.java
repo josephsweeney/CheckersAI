@@ -9,5 +9,9 @@ public interface Move {
 
   boolean isJump();
 
+  public void setValue(double value);
+
+  public double getValue();
+
 
 }
