@@ -57,9 +57,7 @@ public class Learn{
             current.printState();
             moves++;
         }
-        while(!current.isTerminal() && moves <= 50){
-            System.out.println("alphas moves:");
-            System.out.println(current.actions());
+        while(!current.isTerminal() && moves <= 100){
             Move next = alpha.minimax(current, 7); // get alpha's move
             le.addData(current.getFeatures(alpha.getPlayer()), next.getValue()); // add this moves data to the data set (the value of the state is stored in the move. there is probably a better way to do this)
             current = current.result(next); // make the move
