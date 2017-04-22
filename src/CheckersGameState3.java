@@ -482,20 +482,16 @@ public class CheckersGameState3 implements CheckersGameState{
    }
 
    public boolean isTerminal(){
-       double rat = pieceRatio(this.player);
-       return (rat == 0 || rat == Double.POSITIVE_INFINITY);
+       return this.actions.size() == 0;
     }
 
    public int winner(){ // only call after isTerminal
-       for(int i = 0; i < board.length; i++){
-           if(board[i] == 1 ||  board[i] == 3){
-               return 1;
-            }
-           else if(board[i] == 2 || board[i] == 4){
-               return 2;
-            }
-        }
+     if(this.actions.size()==0){
+       return this.other(this.player);
+     }
+     else {
        return 0;
+     }
     }
 
    public void printState(){
