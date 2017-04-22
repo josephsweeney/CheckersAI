@@ -383,7 +383,7 @@ public class CheckersGameState3 implements CheckersGameState{
       promotion line opening]
    */
    public double[] getFeatures(int player){
-     double[] features = new double[9];
+     double[] features = new double[10];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
@@ -402,12 +402,20 @@ public class CheckersGameState3 implements CheckersGameState{
               features[3]+=1.0; //#pawns
               if(pawn_can_move(i)) features[4] += 1.0;  //moveable pawns
               features[5] += getDistance(i);       		//aggregate distance
+              if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
+                //central pawns
+                features[9] +=1.0;
+              }
            }
            else if(this.board[i] == player+2){    		//king
              features[3]+=2.0;							//add weight to #pawns
              if(king_can_move(i)) features[4] += 2.0;   //add to aggregate distance of the kings
+               if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
+               //central kings
+               features[9] +=2.0;
+             }
          }
-           
+
        }
      }
    }
@@ -433,7 +441,7 @@ public class CheckersGameState3 implements CheckersGameState{
 				   total++;
 			   }
 		   }
-	   }  
+	   }
 	   return total;
    }
    /*feature: attacking pieces (located top 2 rows)*/
