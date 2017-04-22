@@ -383,33 +383,78 @@ public class CheckersGameState3 implements CheckersGameState{
       promotion line opening]
    */
    public double[] getFeatures(int player){
-     double[] features = new double[7];
+     double[] features = new double[9];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){                                  //valid square
-         if(this.board[i] != 0 ) total+=1.0;
-         if(myPiece(this.board[i], player)){
+    	   //total pieces
+    	   if(this.board[i] != 0 ) total+=1.0;
+    	   //piece ratio
+    	   if(myPiece(this.board[i], player)){
            mypieces+=1.0;
+           //# loner pieces
            if(isLoner(i)) features[1] +=1.0;
+           //# safe pieces
            if(isSafe(i))  features[2] +=1.0;
-           if(this.board[i] == player){            //pawn
-              features[3]+=1.0;
-              if(pawn_can_move(i)) features[4] += 1.0;
-              features[5] += getDistance(i);       //aggregate distance
+           //# moveable pawns/aggregate distance
+           if(this.board[i] == player){            		//pawn
+              features[3]+=1.0; //#pawns
+              if(pawn_can_move(i)) features[4] += 1.0;  //moveable pawns
+              features[5] += getDistance(i);       		//aggregate distance
            }
-           else if(this.board[i] == player+2){     //king
-             features[3]+=2.0;
-             if(king_can_move(i)) features[4] += 2.0;
+           else if(this.board[i] == player+2){    		//king
+             features[3]+=2.0;							//add weight to #pawns
+             if(king_can_move(i)) features[4] += 2.0;   //add to aggregate distance of the kings
          }
+           
        }
      }
    }
-     features[0] = mypieces/total;
+     features[0] = mypieces/total; //piece ratio
      features[6] = promotionLineOpenings(player);
+     features[7] = numDefending(player);
+     features[8] = numAttacking(player);
      return features;
    }
-
+   /*feature: defending pieces (located in bottom 2 rows)*/
+   private int numDefending(int player){
+	   int total =0;
+	   if(player==1){
+		   for(int i =0; i<=7; i++){
+			   if(this.board[i]==1 && valid_square(i)){ //if black player
+					 total++;
+				   }
+		  }
+	   }
+	   else if(player == 2){
+		   for(int i =27; i<34;i++){
+			   if(this.board[i]==2 && valid_square(i)){
+				   total++;
+			   }
+		   }
+	   }  
+	   return total;
+   }
+   /*feature: attacking pieces (located top 2 rows)*/
+   private int numAttacking(int player){
+	   int total =0;
+	   if(player==1){
+		   for(int i=9;i<=21;i++){
+			   if(this.board[i]==1 && valid_square(i)){
+				   total++;
+			   }
+		   }
+	   }
+	   else if(player==2){
+		   for(int i = 13; i<=25;i++){
+			   if(this.board[i]==2 && valid_square(i)){
+				   total++;
+			   }
+		   }
+	   }
+	   return total;
+   }
    /*feature: piece has no neighbors*/
    private boolean isLoner(int index){
      if(valid_square(index-5)){
