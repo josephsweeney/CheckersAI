@@ -374,13 +374,16 @@ public class CheckersGameState3 implements CheckersGameState{
    }
 
    /* computes feature vector:
-      piece-ratio, loners, safes, pawns,
-      moveable pawns, aggregate distance,
-      kings, moveable kings, promotion line
-      opening
+      [piece-ratio,
+      loners,
+      safes,
+      pawns,
+      moveable pawns,
+      aggregate distance,
+      promotion line opening]
    */
    public double[] getFeatures(int player){
-     double[] features = new double[9];
+     double[] features = new double[7];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
@@ -396,14 +399,14 @@ public class CheckersGameState3 implements CheckersGameState{
               features[5] += getDistance(i);       //aggregate distance
            }
            else if(this.board[i] == player+2){     //king
-             features[6]+=1.0;
-             if(king_can_move(i)) features[7] += 1.0;
+             features[3]+=2.0;
+             if(king_can_move(i)) features[4] += 2.0;
          }
        }
      }
    }
      features[0] = mypieces/total;
-     features[8] = promotionLineOpenings(player);
+     features[6] = promotionLineOpenings(player);
      return features;
    }
 
