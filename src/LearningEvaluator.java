@@ -40,7 +40,7 @@ public class LearningEvaluator extends BaseEvaluator{
         // get a lot of singular matrices
         // we could do samuel's method or come up with another function to modify the coefficients
         int curr_in = 0;
-        int data_sz = 8;   // need to do regression with data sets of size 10, so each iteration of loop uses 10 lines of data
+        int data_sz = params.get(0).length + 1;   // need to do regression with data sets of size 10, so each iteration of loop uses 10 lines of data
         while(params.size() - curr_in > data_sz){
             double[] vals = new double [data_sz]; //converting arraylist to array
             System.out.println("printing values");
