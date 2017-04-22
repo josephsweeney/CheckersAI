@@ -425,6 +425,34 @@ public class CheckersGameState3 implements CheckersGameState{
      features[8] = numAttacking(player);
      return features;
    }
+   /* number of pawns and kings on the long diagonal*/
+   public int numOnMainDiag(int player){
+     int count = 0;
+     for(int i = 3; i<=31; i+=4){
+       if(board[i] == player) count++;
+       if(board[i] == player+2) count+=2;
+     }
+     return count;
+   }
+   /* number of pawns and kings on one of the shorter diagonals*/
+   public int numOnDiag1(int player){
+     int count = 0;
+     for(int i = 0; i<=30; i+=5){
+       if(board[i] == player) count++;
+       if(board[i] == player+2) count+=2;
+     }
+     return count;
+   }
+   /* number of pawns and kings on one of the shorter diagonals*/
+   public int numOnDiag2(int player){
+     int count = 0;
+     for(int i = 4; i<=34; i+=5){
+       if(board[i] == player) count++;
+       if(board[i] == player+2) count+=2;
+     }
+     return count;
+   }
+
    /*feature: defending pieces (located in bottom 2 rows)*/
    private int numDefending(int player){
 	   int total =0;
