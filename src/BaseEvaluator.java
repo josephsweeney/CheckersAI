@@ -25,7 +25,7 @@ public class BaseEvaluator implements Evaluator{
     public double evaluate(CheckersGameState s, int player){
         if(s.isTerminal()){
             if(s.winner() == player){
-                return 1000; // what should this be?
+                return 200; // what should this be?
             }
             else{
                 return 0; // assuming only positive evalutions

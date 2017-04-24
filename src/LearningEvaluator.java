@@ -39,23 +39,23 @@ public class LearningEvaluator extends BaseEvaluator{
         // using least squares might be a bad idea
         // get a lot of singular matrices
         // we could do samuel's method or come up with another function to modify the coefficients
-        int curr_in = 0;
-        int data_sz = params.get(0).length + 1;   // need to do regression with data sets of size 10, so each iteration of loop uses 10 lines of data
-        while(params.size() - curr_in > data_sz){
-            double[] vals = new double [data_sz]; //converting arraylist to array
+//        int curr_in = 0;
+ //       int data_sz = params.get(0).length + 1;   // need to do regression with data sets of size 10, so each iteration of loop uses 10 lines of data
+        //while(params.size() - curr_in > data_sz){
+            double[] vals = new double [values.size()]; //converting arraylist to array
             System.out.println("printing values");
             int j = 0;
-            for(int i = curr_in; i < curr_in + data_sz; i++){
-                vals[j] = values.get(i);
+            for(int i = 0; i < values.size(); i++){
+                vals[i] = values.get(i);
                 System.out.println(values.get(i));
                 j++;
             }
             System.out.println(vals);
             System.out.println("printing params");
-            double[][] pars = new double[data_sz][]; //converting 2d arraylist to array
+            double[][] pars = new double[params.size()][]; //converting 2d arraylist to array
             j=0;
-            for(int i=curr_in; i < curr_in + data_sz; i++){
-                pars[j] = params.get(i);
+            for(int i=0; i < params.size(); i++){
+                pars[i] = params.get(i);
                 System.out.println(Arrays.toString(params.get(i)));
                 j++;
             }
@@ -67,13 +67,16 @@ public class LearningEvaluator extends BaseEvaluator{
               for(int i = 0; i < this.weights.length; i++){
                   this.weights[i] = this.weights[i] + alpha * (new_weights[i] - this.weights[i]);
               }
+              System.out.println("updated weights " + Arrays.toString(this.weights));
               commitWeights(this.file);
             } catch(SingularMatrixException e) {
               System.out.println("Matrix was singular, not updating weights");
             }
-            curr_in += data_sz;
-        }
+            //curr_in += data_sz;
+        //}
 
+        //values = new ArrayList<Double>(values.subList(curr_in, values.size()));
+        //params = new ArrayList<double[]>(params.subList(curr_in, params.size()));
         values.clear();
         params.clear();
 
