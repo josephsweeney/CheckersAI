@@ -374,40 +374,43 @@ public class CheckersGameState3 implements CheckersGameState{
    }
 
    /* computes feature vector:
-      [piece-ratio,
-      loners,
-      safes,
-      pawns,
-      moveable pawns,
-      aggregate distance,
-      promotion line opening]
+      [0: piece-ratio,
+       1: loners,
+       2: safes,
+       3: 1*#pawns+ 2*#kings
+       4: # of moveable pawns + 2*#of moveable kings
+       5: aggregate distance of all pawns to promotion line
+       6: promotion line opening
+       7: num defending pieces
+       8: num attacking pieces
+       9: central pieces
+       10: # pawns on diagonal + 2 * # kings on diagonal
+       11: ^ same but for the two smaller diagonals
+       ]
    */
    public double[] getFeatures(int player){
-     double[] features = new double[10];
+     double[] features = new double[12];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){                                  //valid square
-    	   //total pieces
     	   if(this.board[i] != 0 ) total+=1.0;
-    	   //piece ratio
+         /****my pieces (pawns and kings)*****/
     	   if(myPiece(this.board[i], player)){
            mypieces+=1.0;
-           //# loner pieces
            if(isLoner(i)) features[1] +=1.0;
-           //# safe pieces
            if(isSafe(i))  features[2] +=1.0;
-           //# moveable pawns/aggregate distance
-           if(this.board[i] == player){            		//pawn
-              features[3]+=1.0; //#pawns
+          /*****pawns features****/
+           if(this.board[i] == player){
+              features[3]+=1.0;
               if(pawn_can_move(i)) features[4] += 1.0;  //moveable pawns
               features[5] += getDistance(i);       		//aggregate distance
               if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
-                //central pawns
-                features[9] +=1.0;
+                features[9] +=1.0;  //central pawns
               }
            }
-           else if(this.board[i] == player+2){    		//king
+           /****kings features****/
+           else if(this.board[i] == player+2){
              features[3]+=2.0;							//add weight to #pawns
              if(king_can_move(i)) features[4] += 2.0;   //add to aggregate distance of the kings
                if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
@@ -423,6 +426,8 @@ public class CheckersGameState3 implements CheckersGameState{
      features[6] = promotionLineOpenings(player);
      features[7] = numDefending(player);
      features[8] = numAttacking(player);
+     features[10] = numOnMainDiag(player);
+     features[11] = numOnDiag1(player) + numOnDiag2(player);
      return features;
    }
    /* number of pawns and kings on the long diagonal*/
