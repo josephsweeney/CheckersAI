@@ -388,16 +388,22 @@ public class CheckersGameState3 implements CheckersGameState{
        11: ^ same but for the two smaller diagonals
        ]
    */
+   private boolean king(int piece){
+       return (piece == 3 || piece == 4);
+    }
+
    public double[] getFeatures(int player){
      double[] features = new double[12];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){                                  //valid square
-    	   if(this.board[i] != 0 ) total+=1.0;
+    	   if(this.board[i] != 0 ) total+=2.0;
+           if(king(this.board[i])) total+=1.0; //  pawn is 2, king is 3
          /****my pieces (pawns and kings)*****/
     	   if(myPiece(this.board[i], player)){
-           mypieces+=1.0;
+           mypieces+=2.0;
+           if(king(this.board[i])) mypieces+=1.0; // pawn is 2, king is 3
            if(isLoner(i)) features[1] +=1.0;
            if(isSafe(i))  features[2] +=1.0;
           /*****pawns features****/
