@@ -388,16 +388,22 @@ public class CheckersGameState3 implements CheckersGameState{
        11: ^ same but for the two smaller diagonals
        ]
    */
+   private boolean king(int piece){
+       return (piece == 3 || piece == 4);
+    }
+
    public double[] getFeatures(int player){
      double[] features = new double[12];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){                                  //valid square
-    	   if(this.board[i] != 0 ) total+=1.0;
+    	   if(this.board[i] != 0 ) total+=2.0;
+           if(king(this.board[i])) total+=1.0; //  pawn is 2, king is 3
          /****my pieces (pawns and kings)*****/
     	   if(myPiece(this.board[i], player)){
-           mypieces+=1.0;
+           mypieces+=2.0;
+           if(king(this.board[i])) mypieces+=1.0; // pawn is 2, king is 3
            if(isLoner(i)) features[1] +=1.0;
            if(isSafe(i))  features[2] +=1.0;
           /*****pawns features****/
@@ -430,6 +436,50 @@ public class CheckersGameState3 implements CheckersGameState{
      features[11] = numOnDiag1(player) + numOnDiag2(player);
      return features;
    }
+
+   /* computes feature vector:
+      [0: piece-ratio,
+       1: # of moveable pawns + 2*#of moveable kings
+       2: num attacking pieces
+       3: central pieces
+       4: # pawns on diagonal + 2 * # kings on diagonal
+       5: ^ same but for the two smaller diagonals
+       ]
+   */
+   public double[] getEndGameFeatures(int player){
+     double[] features = new double[6];
+     double total = 0.0;
+     double mypieces = 0.0;
+     for(int i = 0; i<this.board.length; i++){
+       if(i%9!=8){                                  //valid square
+        if(this.board[i] != 0 ) total+=1.0;
+         /****my pieces (pawns and kings)*****/
+        if(myPiece(this.board[i], player)){
+           mypieces+=1.0;
+          /*****pawns features****/
+           if(this.board[i] == player){
+              if(pawn_can_move(i)) features[1] += 1.0;  //moveable pawns
+              if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
+                features[3] +=1.0;  //central pawns
+              }
+           }
+           /****kings features****/
+           else if(this.board[i] == player+2){
+             if(king_can_move(i)) features[1] += 2.0;   //add to aggregate distance of the kings
+               if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
+               features[3] +=2.0;                //central kings
+             }
+         }
+       }
+     }
+   }
+     features[0] = mypieces/total; //piece ratio
+     features[2] = numAttacking(player);
+     features[4] = numOnMainDiag(player);
+     features[5] = numOnDiag1(player) + numOnDiag2(player);
+     return features;
+   }
+
    /* number of pawns and kings on the long diagonal*/
    public int numOnMainDiag(int player){
      int count = 0;
@@ -552,6 +602,7 @@ public class CheckersGameState3 implements CheckersGameState{
 	   return false;
    }
    /* feature: Dog pattern*/
+<<<<<<< HEAD
    public boolean isDog(int player){ 
 	   if(player==1){
 		   if((this.board[0]==1 || this.board[0]==3) && (this.board[4]==2||this.board[4]==2)){
@@ -563,6 +614,10 @@ public class CheckersGameState3 implements CheckersGameState{
 			   return true;
 		   }
 	   }
+=======
+   public boolean isDog(int player){
+
+>>>>>>> fa404932a69ef682b050341bcfdb0b3f7f825bf2
 	   return false;
    }
    public boolean isTerminal(){
