@@ -521,6 +521,23 @@ public class CheckersGameState3 implements CheckersGameState{
 	   }
 	   return false;
    }
+   /* feature: bridge pattern*/
+   private boolean isBridge(int player){
+	   if(player == 1){
+		   if((this.board[0]==1) && (this.board[2]==1){
+			   return true;
+		   }
+	   }
+	   else if(player == 2){
+		   if((this.board[32]==2) && this.board[34]==2){
+			   return true;
+		   }
+	   }
+	   return false;
+   }
+   private boolean isTriangle(int player){
+	   return false;
+   }
 
    public boolean isTerminal(){
        return this.actions.size() == 0;
