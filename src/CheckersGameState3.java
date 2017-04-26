@@ -535,6 +535,21 @@ public class CheckersGameState3 implements CheckersGameState{
      }
     }
 
+   public int numPieces(int player){
+       int tot = 0;
+       for(int i: this.board){
+           if(i == player){
+               tot += 1;
+            }
+           if(i == player + 2){
+               tot += 2;
+            }
+        }
+        return tot;
+    }
+
+
+
    public void printState(){
         boolean leading = false;
         int printed = 0;

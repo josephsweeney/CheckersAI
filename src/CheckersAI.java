@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class CheckersAI{
 
 
@@ -52,7 +54,6 @@ public class CheckersAI{
         double v = Double.NEGATIVE_INFINITY;
         double check;
         Move max = null;
-        System.out.println(s.actions().size());
         for(Move a: s.actions()){
             check = minValue(s.result(a), alpha, beta, depth + 1, a.isJump(), min_ply);
             if(check > v){

@@ -23,14 +23,14 @@ public class BaseEvaluator implements Evaluator{
     }
 
     public double evaluate(CheckersGameState s, int player){
-        if(s.isTerminal()){
-            if(s.winner() == player){
-                return 200; // what should this be?
-            }
-            else{
-                return 0; // assuming only positive evalutions
-            }
-        }
+        //if(s.isTerminal()){
+        //    if(s.winner() == player){
+        //        return 1000; // what should this be?
+        //    }
+        //    else{
+        //        return 0; // assuming only positive evalutions
+        //    }
+        //}
         double[] params = s.getFeatures(player);
         return dot(this.weights, params);
     }
@@ -38,6 +38,10 @@ public class BaseEvaluator implements Evaluator{
     public void refreshWeights(){
         this.weights = this.wp.getWeights(this.file);
     }
+    public void commitWeights(String path){
+        this.wp.writeWeights(path, this.weights); // method to commit weights to beta. provide path to beta csv
+    }
+
 
 
 }
