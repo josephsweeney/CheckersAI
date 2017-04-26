@@ -537,11 +537,32 @@ public class CheckersGameState3 implements CheckersGameState{
    }
    /* feature: triangle patter*/
    public boolean isTriangle(int player){
+	   if(player==2){
+		   if((this.board[33]==2 || this.board[33]==4) 
+			&&(this.board[34]==2 || this.board[34]==4)
+			&&(this.board[24]==2 || this.board[24]==4))
+			return true;
+	   }
+	   if(player==1){
+		   if((this.board[0]==1 || this.board[0]==3) 
+			&&(this.board[1]==1 || this.board[1]==3)
+			&&(this.board[5]==1 || this.board[5]==3))
+			return true;
+	   }
 	   return false;
    }
    /* feature: Dog pattern*/
    public boolean isDog(int player){ 
-	   
+	   if(player==1){
+		   if((this.board[0]==1 || this.board[0]==3) && (this.board[4]==2||this.board[4]==2)){
+			   return true;
+		   }
+	   }
+	   else if(player==2){
+		   if((this.board[30]==1 || this.board[30]==3) && (this.board[34]==2||this.board[34]==2)){
+			   return true;
+		   }
+	   }
 	   return false;
    }
    public boolean isTerminal(){
