@@ -22,10 +22,12 @@ public class Learn{
         final int num_games = 30;
         final int iterations = 3;
 
+        Random rand = new Random();
         for(int j = 0; j < iterations; j++){
             for(int i = 1; i <= num_games; i++){ // play num_games amount of games
                 System.out.println("playing game " + i);
-                play(alpha, beta, le, true); // alpha and beta play a game
+                int player = rand.nextInt(2) + 1; // choose which player alpha plays as
+                play(alpha, beta, le, player, true); // alpha and beta play a game
                 le.updateWeights(.1); // get new weights using data from game
             }
             faceBeta(alpha, beta, le, be);
@@ -33,19 +35,16 @@ public class Learn{
     }
 
     public static void faceBeta(CheckersAI alpha, CheckersAI beta, LearningEvaluator le, BaseEvaluator be){
-        int won = 0;
-        boolean w;
+        boolean w1;
+        boolean w2;
         CheckersGameState s;
         System.out.println("facing beta");
-        for(int i = 0; i < 10; i++){
-            s = new CheckersGameState3();
-            w = play(alpha, beta, le, false);
-            if(w){
-               won++;
-            }
-        }
-        System.out.println("alpha won " + won + " times");
-        if(won >= 7){
+        s = new CheckersGameState3();
+        w1 = play(alpha, beta, le, 1, false);
+        w2 = play(alpha, beta, le, 2, false);
+
+        System.out.println("alpha won " + w1 + " " + w2);
+        if(w1 && w2){
             System.out.println("updating beta");
             le.commitWeights("../src/weights/beta.csv");
             be.refreshWeights();
@@ -61,21 +60,22 @@ public class Learn{
 
 
 
-    public static boolean play(CheckersAI alpha, CheckersAI beta, LearningEvaluator le, boolean learning){
+    public static boolean play(CheckersAI alpha, CheckersAI beta, LearningEvaluator le, int player, boolean learning){
         CheckersGameState current = new CheckersGameState3();
-        Random rand = new Random();
-        int player = rand.nextInt(2) + 1; // choose which player alpha plays as
         int other = 1 - (player - 1)  + 1;
         alpha.setPlayer(player);
         beta.setPlayer(other);
+        int moves = 0;
         if(other == 1){ // if beta goes first, make a move
             current = current.result(beta.minimax(current, 7));
+            moves++;
         }
         int same_moves = 0;
         Move lastmove = null;
         Move secondlast = null;
-        while(!current.isTerminal() && same_moves <= 3){
+        while(!current.isTerminal() && same_moves <= 3 && moves <= 100){
             Move next = alpha.minimax(current, 7); // get alpha's move
+            moves++;
             if(secondlast != null && next.toString().equals(secondlast.toString())){
                 same_moves++;
             }
@@ -85,6 +85,7 @@ public class Learn{
                 le.addData(current.getFeatures(alpha.getPlayer()), next.getValue()); // add this moves data to the data set (the value of the state is stored in the move. there is probably a better way to do this)
             }
             current = current.result(next); // make the move
+            moves++;
             //current.printState();
             if(current.isTerminal()){ // if alpha won, then break
                 break;

@@ -28,7 +28,7 @@ public class BaseEvaluator implements Evaluator{
         //        return 1000; // what should this be?
         //    }
         //    else{
-        //        return 0; // assuming only positive evalutions
+        //        return -1000; // assuming only positive evalutions
         //    }
         //}
         double[] params = s.getFeatures(player);
