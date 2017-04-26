@@ -602,7 +602,6 @@ public class CheckersGameState3 implements CheckersGameState{
 	   return false;
    }
    /* feature: Dog pattern*/
-<<<<<<< HEAD
    public boolean isDog(int player){ 
 	   if(player==1){
 		   if((this.board[0]==1 || this.board[0]==3) && (this.board[4]==2||this.board[4]==2)){
@@ -614,10 +613,6 @@ public class CheckersGameState3 implements CheckersGameState{
 			   return true;
 		   }
 	   }
-=======
-   public boolean isDog(int player){
-
->>>>>>> fa404932a69ef682b050341bcfdb0b3f7f825bf2
 	   return false;
    }
    public boolean isTerminal(){

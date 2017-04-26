@@ -100,7 +100,7 @@ public class Learn{
 
     public static boolean improved(CheckersGameState i, int player){
         CheckersGameState3 s = (CheckersGameState3) i;
-        return s.numPieces(player) >= (4 + s.numPieces(1 + (1 - (player-1))));
+        return s.numPieces(player) >= (2 + s.numPieces(1 + (1 - (player-1))));
     }
 
 }
