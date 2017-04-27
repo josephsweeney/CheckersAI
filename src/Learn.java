@@ -19,8 +19,8 @@ public class Learn{
     // for learning rate, first 30 with .1, next 30 with .05, then final 30 with .01 and see what happens
 
     public static void learn(CheckersAI alpha, CheckersAI beta, LearningEvaluator le, BaseEvaluator be){
-        final int num_games = 10;
-        final int iterations = 10;
+        final int num_games = 5;
+        final int iterations = 20;
 
         Random rand = new Random();
         for(int j = 0; j < iterations; j++){
@@ -73,7 +73,7 @@ public class Learn{
         int same_moves = 0;
         Move lastmove = null;
         Move secondlast = null;
-        while(!current.isTerminal() && same_moves <= 3 && moves <= 100){
+        while(!current.isTerminal() && same_moves <= 3 && moves <= 200){
             Move next = alpha.minimax(current, 7); // get alpha's move
             moves++;
             if(secondlast != null && next.toString().equals(secondlast.toString())){
