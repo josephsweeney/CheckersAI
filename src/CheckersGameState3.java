@@ -199,6 +199,19 @@ public class CheckersGameState3 implements CheckersGameState{
         return backward || forward;
     }
 
+    private boolean any_jumps(int pos){
+      if(this.board[pos] == 1){
+        if(any_jumps(pos, 4, 5, this.board, false)) return true;
+      }
+      else if(this.board[pos] == 2){
+        if(any_jumps(pos, -4, -5, this.board, false)) return true;
+      }
+      else {
+        if(any_jumps(pos,4,5,this.board,true)) return true;
+      }
+      return false;
+    }
+
     public List<Move> actions(){
         return this.actions;
     }
@@ -443,11 +456,14 @@ public class CheckersGameState3 implements CheckersGameState{
        2: num attacking pieces
        3: central pieces
        4: # pawns on diagonal + 2 * # kings on diagonal
-       5: ^ same but for the two smaller diagonals
+       5: bridge pattern
+       6: triangle pattern
+       7: dog pattern
+       8: opponents kings are on the side.
        ]
    */
    public double[] getEndGameFeatures(int player){
-     double[] features = new double[6];
+     double[] features = new double[9];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
@@ -475,8 +491,11 @@ public class CheckersGameState3 implements CheckersGameState{
    }
      features[0] = mypieces/total; //piece ratio
      features[2] = numAttacking(player);
-     features[4] = numOnMainDiag(player);
-     features[5] = numOnDiag1(player) + numOnDiag2(player);
+     features[4] = numOnDiag1(player) + numOnDiag2(player);
+     features[5] = bridge(player);
+     features[6] = triangle(player);
+     features[7] = dog(player);
+     features[8] = opponKingsOnSide(player);
      return features;
    }
 
@@ -571,49 +590,71 @@ public class CheckersGameState3 implements CheckersGameState{
 	   }
 	   return false;
    }
+
+   private int opponKing(int player){
+     if(player == 1) return 4;
+     else if(player == 2) return 3;
+     else {
+       System.out.println("opponKing problem");
+       return -1;
+     }
+   }
+   /* end-game feature: oppponents kings are on the side (out of the way) */
+   private double opponKingsOnSide(int player){
+     double count = 0.0;
+     int oppKing = opponKing(player);
+     for(int i = 3; i<=30; i+=9){
+       if(this.board[i] == oppKing) count +=1.0;
+       if(this.board[i+1] == oppKing) count +=1.0;
+     }
+     return count;
+   }
+
    /* feature: bridge pattern*/
-   public boolean isBridge(int player){
+   public double bridge(int player){
 	   if(player == 1){
-		   if((this.board[0]==1) && (this.board[2]==1)){
-			   return true;
-		   }
-	   }
+       if(myPiece(board[0], player) && myPiece(board[2], player)){
+          if(any_jumps(0) || any_jumps(2)) return 0.0; //active piece
+          else return 1.0; //passive piece
+       }
+		 }
 	   else if(player == 2){
-		   if((this.board[32]==2) && (this.board[34]==2)){
-			   return true;
+		   if(myPiece(board[32], player) && myPiece(board[34], player)){
+         if(any_jumps(32) || any_jumps(34)) return 0.0;
+			   else return 1.0;
 		   }
 	   }
-	   return false;
+	   return 0.0;
    }
    /* feature: triangle patter*/
-   public boolean isTriangle(int player){
+   public double triangle(int player){
 	   if(player==2){
-		   if((this.board[33]==2 || this.board[33]==4) 
+		   if((this.board[33]==2 || this.board[33]==4)
 			&&(this.board[34]==2 || this.board[34]==4)
 			&&(this.board[24]==2 || this.board[24]==4))
-			return true;
+			return 1.0;
 	   }
 	   if(player==1){
-		   if((this.board[0]==1 || this.board[0]==3) 
+		   if((this.board[0]==1 || this.board[0]==3)
 			&&(this.board[1]==1 || this.board[1]==3)
 			&&(this.board[5]==1 || this.board[5]==3))
-			return true;
+			return 1.0;
 	   }
-	   return false;
+	   return 0.0;
    }
    /* feature: Dog pattern*/
-   public boolean isDog(int player){ 
+   public double dog(int player){
 	   if(player==1){
 		   if((this.board[0]==1 || this.board[0]==3) && (this.board[4]==2||this.board[4]==2)){
-			   return true;
+			   return 1.0;
 		   }
 	   }
 	   else if(player==2){
 		   if((this.board[30]==1 || this.board[30]==3) && (this.board[34]==2||this.board[34]==2)){
-			   return true;
+			   return 1.0;
 		   }
 	   }
-	   return false;
+	   return 0.0;
    }
    public boolean isTerminal(){
        return this.actions.size() == 0;
