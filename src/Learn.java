@@ -19,8 +19,8 @@ public class Learn{
     // for learning rate, first 30 with .1, next 30 with .05, then final 30 with .01 and see what happens
 
     public static void learn(CheckersAI alpha, CheckersAI beta, LearningEvaluator le, BaseEvaluator be){
-        final int num_games = 30;
-        final int iterations = 3;
+        final int num_games = 10;
+        final int iterations = 10;
 
         Random rand = new Random();
         for(int j = 0; j < iterations; j++){
