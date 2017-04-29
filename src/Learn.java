@@ -19,8 +19,8 @@ public class Learn{
     // for learning rate, first 30 with .1, next 30 with .05, then final 30 with .01 and see what happens
 
     public static void learn(CheckersAI alpha, CheckersAI beta, LearningEvaluator le, BaseEvaluator be){
-        final int num_games = 5;
-        final int iterations = 20;
+        final int num_games = 30;
+        final int iterations = 7;
 
         Random rand = new Random();
         for(int j = 0; j < iterations; j++){
@@ -28,9 +28,21 @@ public class Learn{
                 System.out.println("playing game " + i);
                 int player = rand.nextInt(2) + 1; // choose which player alpha plays as
                 play(alpha, beta, le, player, true); // alpha and beta play a game
-                le.updateWeights(.1); // get new weights using data from game
+                le.updateWeights(learningParameter(i, num_games)); // get new weights using data from game
+                //le.updateWeights(.1); // get new weights using data from game
             }
             faceBeta(alpha, beta, le, be);
+        }
+    }
+
+    public static double learningParameter(int played, int games){
+        if(played <= .80 * games){
+            return .10;
+        }
+        else{
+            double remaining = games - .80 * games;
+            double divisor = remaining - (games - played);
+            return .10/(divisor);
         }
     }
 

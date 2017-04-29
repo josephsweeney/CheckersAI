@@ -45,7 +45,7 @@ public class LearningEvaluator extends BaseEvaluator{
         try {
             double[] new_weights = reg.estimateRegressionParameters(); //get parameters
             for(double x: new_weights){
-                if(Math.abs(x) > 10000){
+                if(Math.abs(x) > 100000){
                     System.out.println("bad data, not updating");
                     return;
                 }
