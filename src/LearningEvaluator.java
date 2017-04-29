@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 import org.apache.commons.math3.linear.SingularMatrixException;
+import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import java.util.Arrays;
 
 public class LearningEvaluator extends BaseEvaluator{
@@ -57,6 +58,8 @@ public class LearningEvaluator extends BaseEvaluator{
             commitWeights(this.file);
         } catch(SingularMatrixException e) {
             System.out.println("Matrix was singular, not updating weights");
+        } catch(MathIllegalArgumentException e){
+            System.out.println("Not enough data, not updating end game weights");
         }
         values.clear();
         params.clear();
