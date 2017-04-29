@@ -120,7 +120,7 @@ public class Learn{
             if(learning && !switchedToEndGame){
                 le.addData(current.getFeatures(alpha.getPlayer()), next.getValue()); // add this moves data to the data set (the value of the state is stored in the move. there is probably a better way to do this)
             }
-            else if(switchedToEndGame){
+            else if(learning && switchedToEndGame){
               endle.addData(current.getEndGameFeatures(alpha.getPlayer()), next.getValue());
             }
             current = current.result(next); // make the move
