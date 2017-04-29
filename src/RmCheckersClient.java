@@ -49,7 +49,7 @@ public class RmCheckersClient {
 
   public Evaluator e;
   public CheckersAI ai;
-  public CheckersGameState currentState;
+  public CheckersGameState3 currentState;
 
   public RmCheckersClient(){
     _socket = openSocket();
@@ -150,6 +150,8 @@ public class RmCheckersClient {
 
   public void playGame(int player) {
     int minPly = 8;
+    int maxPly = 12;
+    int incPly = 7;
     try {
       String msg = readAndEcho(); // initial message
       if(player == 1) { // black
@@ -161,6 +163,9 @@ public class RmCheckersClient {
         readAndEcho(); // move query
       }
       while(currentState.actions().size()>0){
+        if(currentState.isEndGame() && minPly < maxPly){
+          minPly+=incPly;
+        }
         currentState.printState();
         Move myMove = ai.minimax(currentState, minPly);
         writeMessageAndEcho(myMove.toString());
