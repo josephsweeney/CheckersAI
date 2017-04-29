@@ -150,8 +150,7 @@ public class RmCheckersClient {
 
   public void playGame(int player) {
     int minPly = 8;
-    int maxPly = 12;
-    int incPly = 7;
+    int maxPly = 15;
     try {
       String msg = readAndEcho(); // initial message
       if(player == 1) { // black
@@ -164,7 +163,7 @@ public class RmCheckersClient {
       }
       while(currentState.actions().size()>0){
         if(currentState.isEndGame() && minPly < maxPly){
-          minPly+=incPly;
+          minPly = maxPly;
         }
         currentState.printState();
         Move myMove = ai.minimax(currentState, minPly);
