@@ -63,7 +63,7 @@ public class RmCheckersClient {
 
   public RmCheckersClient(int player, String opponent){
     _socket = openSocket();
-    e = new BaseEvaluator("weights/beta-history.csv");
+    e = new BaseEvaluator("../src/weights/beta-history.csv");
     currentState = new CheckersGameState3();
     user = player==1 ? _user1 : _user2;
     password = player==1 ? _password1 : _password2;
