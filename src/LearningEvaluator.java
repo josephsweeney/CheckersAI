@@ -41,9 +41,9 @@ public class LearningEvaluator extends BaseEvaluator{
             System.out.println(Arrays.toString(params.get(i)));
         }
         //System.out.println(pars);
-        reg.newSampleData(vals, pars); //add data
-        reg.setNoIntercept(true);
         try {
+            reg.newSampleData(vals, pars); //add data
+            reg.setNoIntercept(true);
             double[] new_weights = reg.estimateRegressionParameters(); //get parameters
             for(double x: new_weights){
                 if(Math.abs(x) > 100000){
