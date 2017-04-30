@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class CheckersGameState3 implements CheckersGameState{
 
@@ -388,9 +389,9 @@ public class CheckersGameState3 implements CheckersGameState{
 
    /* computes feature vector:
       [0: piece-ratio,
-       1: loners,
-       2: safes,
-       3: 1*#pawns+ 2*#kings
+       1: loners, //toss?
+       2: safes,  /toss?
+       3: 1*#pawns+ 2*#kings //toss?
        4: # of moveable pawns + 2*#of moveable kings
        5: aggregate distance of all pawns to promotion line
        6: promotion line opening
@@ -399,6 +400,9 @@ public class CheckersGameState3 implements CheckersGameState{
        9: central pieces
        10: # pawns on diagonal + 2 * # kings on diagonal
        11: ^ same but for the two smaller diagonals
+       12: bridge pattern   TODO!!!
+       13: triangle pattern TODO
+       14: dog pattern      TODO, also take out useless features
        ]
    */
    private boolean king(int piece){
@@ -452,51 +456,51 @@ public class CheckersGameState3 implements CheckersGameState{
 
    /* computes feature vector:
       [0: piece-ratio,
-       1: # of moveable pawns + 2*#of moveable kings
-       2: num attacking pieces
-       3: central pieces
-       4: # pawns on diagonal + 2 * # kings on diagonal
-       5: bridge pattern
-       6: triangle pattern
-       7: dog pattern
-       8: opponents kings are on the side.
+       1: num attacking pieces
+       2: dist to oppon
        ]
    */
    public double[] getEndGameFeatures(int player){
-     double[] features = new double[9];
+     double[] features = new double[3];
      double total = 0.0;
      double mypieces = 0.0;
+     ArrayList<Integer> mykingloc = new ArrayList<Integer>();
+     ArrayList<Integer> opponpieceloc = new ArrayList<Integer>();
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){                                  //valid square
-        if(this.board[i] != 0 ) total+=1.0;
-         /****my pieces (pawns and kings)*****/
-        if(myPiece(this.board[i], player)){
-           mypieces+=1.0;
-          /*****pawns features****/
-           if(this.board[i] == player){
-              if(pawn_can_move(i)) features[1] += 1.0;  //moveable pawns
-              if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
-                features[3] +=1.0;  //central pawns
-              }
-           }
-           /****kings features****/
-           else if(this.board[i] == player+2){
-             if(king_can_move(i)) features[1] += 2.0;   //add to aggregate distance of the kings
-               if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
-               features[3] +=2.0;                //central kings
+        if(this.board[i] != 0 ) {
+          total+=1.0;
+          if(myPiece(this.board[i], player)){
+             mypieces+=1.0;
+             if(this.board[i] == player+2){ //king
+                mykingloc.add(i);
              }
+          }
+          else{
+             opponpieceloc.add(i);
+           }
          }
        }
      }
-   }
      features[0] = mypieces/total; //piece ratio
-     features[2] = numAttacking(player);
-     features[4] = numOnDiag1(player) + numOnDiag2(player);
-     features[5] = bridge(player);
-     features[6] = triangle(player);
-     features[7] = dog(player);
-     features[8] = opponKingsOnSide(player);
+     features[1] = numAttacking(player);
+     features[2] = distToOppon(mykingloc, opponpieceloc);
      return features;
+   }
+
+/* takes in list of all my and all my opponent's pieces locations on the board
+    and returns an accumulative sum of the distances between our pieces*/
+   private double distToOppon(ArrayList<Integer> myloc, ArrayList<Integer> opploc){
+      int myrow, opprow;
+      int sum = 0;
+      for(int i = 0; i< myloc.size(); i++){
+          myrow = (myloc.get(i)-((myloc.get(i))/9))/4;
+          for(int j=0; j< opploc.size(); j++){
+            opprow = (opploc.get(j)-((opploc.get(j))/9))/4;
+            sum += Math.abs(myrow - opprow);
+          }
+      }
+      return sum * 1.0;
    }
 
    /* number of pawns and kings on the long diagonal*/
@@ -626,7 +630,7 @@ public class CheckersGameState3 implements CheckersGameState{
 	   }
 	   return 0.0;
    }
-   /* feature: triangle patter*/
+   /* feature: triangle pattern*/
    public double triangle(int player){
 	   if(player==2){
 		   if((this.board[33]==2 || this.board[33]==4)
@@ -682,7 +686,19 @@ public class CheckersGameState3 implements CheckersGameState{
         return tot;
     }
 
-
+    public boolean isEndGame(){
+        int mypieces = 0, others = 0, maxPieces =3;
+        for(int i=0; i<board.length; i++){
+          if(board[i]!=0){
+            if(myPiece(board[i],player)) mypieces+=1;
+            else others+=1;
+          }
+        }
+        if(mypieces <= maxPieces || others <= maxPieces){
+          return true;
+        }
+        else return false;
+    }
 
    public void printState(){
         boolean leading = false;
