@@ -2,6 +2,10 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
+/* Holds board state code for
+  identifying available moves,
+  resultant states, and board
+  attributes */
 public class CheckersGameState3 implements CheckersGameState{
 
     int player;
@@ -387,22 +391,22 @@ public class CheckersGameState3 implements CheckersGameState{
      return sum;
    }
 
+   private boolean isCentral(int i){
+     return i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24;
+   }
+
    /* computes feature vector:
       [0: piece-ratio,
-       1: loners, //toss?
-       2: safes,  /toss?
-       3: 1*#pawns+ 2*#kings //toss?
+       1: loners,
+       2: safes,
+       3: bridge pattern
        4: # of moveable pawns + 2*#of moveable kings
        5: aggregate distance of all pawns to promotion line
        6: promotion line opening
        7: num defending pieces
-       8: num attacking pieces
+       8: num attacking pieces //toss?
        9: central pieces
        10: # pawns on diagonal + 2 * # kings on diagonal
-       11: ^ same but for the two smaller diagonals
-       12: bridge pattern   TODO!!!
-       13: triangle pattern TODO
-       14: dog pattern      TODO, also take out useless features
        ]
    */
    private boolean king(int piece){
@@ -410,47 +414,43 @@ public class CheckersGameState3 implements CheckersGameState{
     }
 
    public double[] getFeatures(int player){
-     double[] features = new double[12];
+     double[] features = new double[11];
      double total = 0.0;
      double mypieces = 0.0;
      for(int i = 0; i<this.board.length; i++){
        if(i%9!=8){                                  //valid square
-    	   if(this.board[i] != 0 ) total+=2.0;
-           if(king(this.board[i])) total+=1.0; //  pawn is 2, king is 3
+    	   if(this.board[i] != 0 ) total+=2.0;        //not empty square
+         if(king(this.board[i])) total+=1.0; //  pawn is 2, king is 3
          /****my pieces (pawns and kings)*****/
     	   if(myPiece(this.board[i], player)){
            mypieces+=2.0;
            if(king(this.board[i])) mypieces+=1.0; // pawn is 2, king is 3
            if(isLoner(i)) features[1] +=1.0;
            if(isSafe(i))  features[2] +=1.0;
-          /*****pawns features****/
+           /*****pawns features****/
            if(this.board[i] == player){
-              features[3]+=1.0;
               if(pawn_can_move(i)) features[4] += 1.0;  //moveable pawns
               features[5] += getDistance(i);       		//aggregate distance
-              if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
+              if(isCentral(i)){
                 features[9] +=1.0;  //central pawns
               }
            }
            /****kings features****/
            else if(this.board[i] == player+2){
-             features[3]+=2.0;							//add weight to #pawns
-             if(king_can_move(i)) features[4] += 2.0;   //add to aggregate distance of the kings
-               if(i == 10 || i == 11 || i == 14 || i == 15 || i == 19 || i == 20 || i == 23 || i ==24){
-               //central kings
+             if(king_can_move(i)) features[4] += 2.0;
+             if(isCentral(i)){
                features[9] +=2.0;
              }
          }
-
        }
      }
    }
      features[0] = mypieces/total; //piece ratio
+     features[3] = bridge(player);
      features[6] = promotionLineOpenings(player);
      features[7] = numDefending(player);
      features[8] = numAttacking(player);
-     features[10] = numOnMainDiag(player);
-     features[11] = numOnDiag1(player) + numOnDiag2(player);
+     features[10] = numOnMainDiag(player) + numOnDiag1(player) + numOnDiag2(player);
      return features;
    }
 
@@ -635,7 +635,7 @@ public class CheckersGameState3 implements CheckersGameState{
 	   if(player==2){
 		   if((this.board[33]==2 || this.board[33]==4)
 			&&(this.board[34]==2 || this.board[34]==4)
-			&&(this.board[24]==2 || this.board[24]==4))
+			&&(this.board[29]==2 || this.board[29]==4))
 			return 1.0;
 	   }
 	   if(player==1){
@@ -649,7 +649,7 @@ public class CheckersGameState3 implements CheckersGameState{
    /* feature: Dog pattern*/
    public double dog(int player){
 	   if(player==1){
-		   if((this.board[0]==1 || this.board[0]==3) && (this.board[4]==2||this.board[4]==2)){
+		   if((this.board[0]==1 || this.board[0]==3) && (this.board[4]==2||this.board[4]==4)){
 			   return 1.0;
 		   }
 	   }

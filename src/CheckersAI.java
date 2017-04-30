@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+/* holds minimax code */
 public class CheckersAI{
 
 
