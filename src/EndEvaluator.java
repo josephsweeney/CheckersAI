@@ -11,10 +11,13 @@ public class EndEvaluator extends LearningEvaluator {
 
 	 if(s.isTerminal()){
            if(s.winner() == player){
-               return endVal; // what should this be?
+               return endVal; 
            }
-           else{
-               return -endVal; // assuming only positive evalutions
+           else if(s.winner() == 0){
+	       return 0;
+	   }
+	   else {
+               return -endVal; 
            }
         }
         double[] params = s.getFeatures(player);
