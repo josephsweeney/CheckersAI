@@ -4,9 +4,9 @@ public class Learn{
     CheckersAI alpha;
     CheckersAI beta;
     LearningEvaluator le;
-    LearningEvaluator endle;
+    EndEvaluator endle;
     BaseEvaluator be;
-    BaseEvaluator endbe;
+    EndEvaluator endbe;
 
     public static void main(String[] args){
         Learn learn = new Learn();
@@ -17,8 +17,8 @@ public class Learn{
       beta = new CheckersAI(be, 2);
       le =  new LearningEvaluator("../src/weights/alpha.csv");
       be = new BaseEvaluator("../src/weights/beta.csv");
-      endle = new LearningEvaluator("../src/weights/endalpha.csv");
-      endbe = new BaseEvaluator("../src/weights/endbeta.csv");
+      endle = new EndEvaluator("../src/weights/endalpha.csv");
+      endbe = new EndEvaluator("../src/weights/endbeta.csv");
     }
 
     // need to decide what to do if we are going on the wrong track

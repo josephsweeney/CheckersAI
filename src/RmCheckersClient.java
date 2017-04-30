@@ -48,13 +48,15 @@ public class RmCheckersClient {
   protected String _myColor;
 
   public Evaluator e;
+    public Evaluator endEval;
   public CheckersAI ai;
   public CheckersGameState3 currentState;
 
   public RmCheckersClient(){
     _socket = openSocket();
     //e = new Evaluator00();
-    e = new BaseEvaluator("weights/beta-hisotry.csv");
+    e = new BaseEvaluator("weights/beta.csv");
+    endEval = new EndEvaluator("../src/weights/endbeta.csv");
     currentState = new CheckersGameState3();
     user = _user1;
     password = _password1;
@@ -63,7 +65,8 @@ public class RmCheckersClient {
 
   public RmCheckersClient(int player, String opponent){
     _socket = openSocket();
-    e = new BaseEvaluator("../src/weights/beta-history.csv");
+    e = new BaseEvaluator("../src/weights/beta.csv");
+    endEval = new EndEvaluator("../src/weights/endbeta.csv");
     currentState = new CheckersGameState3();
     user = player==1 ? _user1 : _user2;
     password = player==1 ? _password1 : _password2;
@@ -150,7 +153,7 @@ public class RmCheckersClient {
 
   public void playGame(int player) {
     int minPly = 8;
-    int maxPly = 15;
+    int maxPly = 12;
     try {
       String msg = readAndEcho(); // initial message
       if(player == 1) { // black
@@ -164,6 +167,7 @@ public class RmCheckersClient {
       while(currentState.actions().size()>0){
         if(currentState.isEndGame() && minPly < maxPly){
           minPly = maxPly;
+	  ai.eval = endEval;
         }
         currentState.printState();
         Move myMove = ai.minimax(currentState, minPly);
