@@ -55,7 +55,7 @@ public class RmCheckersClient {
   public RmCheckersClient(){
     _socket = openSocket();
     //e = new Evaluator00();
-    e = new BaseEvaluator("weights/beta.csv");
+    e = new BaseEvaluator("weights/beta-history.csv");
     endEval = new EndEvaluator("../src/weights/endbeta.csv");
     currentState = new CheckersGameState3();
     user = _user1;
@@ -152,8 +152,10 @@ public class RmCheckersClient {
   }
 
   public void playGame(int player) {
-    int minPly = 8;
-    int maxPly = 12;
+    int minPly = 10;
+    int maxPly = 13;
+    boolean switched = false;
+    int time = 180;
     try {
       String msg = readAndEcho(); // initial message
       if(player == 1) { // black
@@ -165,10 +167,14 @@ public class RmCheckersClient {
         readAndEcho(); // move query
       }
       while(currentState.actions().size()>0){
-        if(currentState.isEndGame() && minPly < maxPly){
+        if(currentState.isEndGame() && !switched){
           minPly = maxPly;
+	  switched = true;
 	  ai.eval = endEval;
         }
+	if(time < 30) {
+	    minPly = 8;
+	}
         currentState.printState();
         Move myMove = ai.minimax(currentState, minPly);
         writeMessageAndEcho(myMove.toString());
@@ -188,6 +194,7 @@ public class RmCheckersClient {
           break;
         }
         msg = readAndEcho(); // move query
+	time = parseTime(msg);
         if(msg.contains("Result")) {
           System.out.println("Done.");
           break;
@@ -198,6 +205,12 @@ public class RmCheckersClient {
       System.exit(1);
     }
   }
+
+  public int parseTime(String msg) {
+      String time = msg.substring(msg.indexOf("(")+1,msg.indexOf(")"));
+      return Integer.parseInt(time);
+  }
+    
 
   public String parseMove(String msg) {
     return msg.substring(11,msg.length());
