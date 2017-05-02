@@ -56,6 +56,9 @@ public class CheckersAI{
         double check;
         Move max = null;
         for(Move a: s.actions()){
+	    if(s.actions().size() == 1) {
+		return a;
+	    }
             check = minValue(s.result(a), alpha, beta, depth + 1, a.isJump(), min_ply);
             if(check > v){
                 v = check;

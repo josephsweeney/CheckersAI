@@ -55,7 +55,7 @@ public class RmCheckersClient {
   public RmCheckersClient(){
     _socket = openSocket();
     //e = new Evaluator00();
-    e = new BaseEvaluator("weights/beta-history.csv");
+    e = new BaseEvaluator("weights/beta.csv");
     endEval = new EndEvaluator("../src/weights/endbeta.csv");
     currentState = new CheckersGameState3();
     user = _user1;
@@ -152,10 +152,10 @@ public class RmCheckersClient {
   }
 
   public void playGame(int player) {
-    int minPly = 10;
-    int maxPly = 13;
+    int minPly = 8;
+    int maxPly = 8;
     boolean switched = false;
-    int time = 180;
+    int time = 150;
     try {
       String msg = readAndEcho(); // initial message
       if(player == 1) { // black
@@ -170,7 +170,9 @@ public class RmCheckersClient {
         if(currentState.isEndGame() && !switched){
           minPly = maxPly;
 	  switched = true;
-	  ai.eval = endEval;
+	  if(currentState.pieceRatio(player) < 0.5){
+	      ai.eval = endEval;
+	  }
         }
 	if(time < 30) {
 	    minPly = 8;
@@ -194,11 +196,11 @@ public class RmCheckersClient {
           break;
         }
         msg = readAndEcho(); // move query
-	time = parseTime(msg);
         if(msg.contains("Result")) {
           System.out.println("Done.");
           break;
         }
+	time = parseTime(msg);
       }
     } catch  (IOException e) {
       System.out.println("Failed in read/close");
