@@ -2274,3 +2274,1693 @@ read: Move:Black:(3:3):(4:2)
 read: Move:White:(3:5):(4:4)
 read: Result:Draw
 Done.
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Different Group Sunday
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+joe@Joes-MacBook-Pro ~/D/S/C/C/bin> 
+java -cp ../dependencies/commons-math3-3.6.1.jar:. RmCheckersClient 1 25
+read: SAM v1.0
+read: ?Username:
+sent: 9
+read: ?Password:
+read: ?Opponent:
+sent: 25
+read: Game:51962
+read: Color:White
+I am playing as White in Game:51962
+read: Move:Black:(5:5):(4:6)
+read: ?Move(180):
+-b-b-b-b
+b-b-b-b-
+-b-b---b
+------b-
+--------
+w-w-w-w-
+-w-w-w-w
+w-w-w-w-
+
+sent: (2:4):(3:5)
+read: Move:White:(2:4):(3:5)
+read: Move:Black:(4:6):(2:4)
+read: ?Move(177):
+-b-b-b-b
+b-b-b-b-
+-b-b---b
+--------
+--------
+w-w-b-w-
+-w-w-w-w
+w-w-w-w-
+
+sent: (1:3):(3:5)
+read: Move:White:(1:3):(3:5)
+read: Move:Black:(6:6):(5:5)
+read: ?Move(177):
+-b-b-b-b
+b-b-b---
+-b-b-b-b
+--------
+-----w--
+w-w---w-
+-w---w-w
+w-w-w-w-
+
+sent: (0:2):(1:3)
+read: Move:White:(0:2):(1:3)
+read: Move:Black:(5:5):(4:6)
+read: ?Move(175):
+-b-b-b-b
+b-b-b---
+-b-b---b
+------b-
+-----w--
+w-w---w-
+-w-w-w-w
+w---w-w-
+
+sent: (1:3):(2:4)
+read: Move:White:(1:3):(2:4)
+read: Move:Black:(7:7):(6:6)
+read: ?Move(175):
+-b-b-b--
+b-b-b-b-
+-b-b---b
+------b-
+-----w--
+w-w-w-w-
+-w---w-w
+w---w-w-
+
+sent: (2:2):(3:3)
+read: Move:White:(2:2):(3:3)
+read: Move:Black:(5:1):(4:2)
+read: ?Move(174):
+-b-b-b--
+b-b-b-b-
+---b---b
+--b---b-
+---w-w--
+w---w-w-
+-w---w-w
+w---w-w-
+
+sent: (3:3):(5:1)
+read: Move:White:(3:3):(5:1)
+read: Move:Black:(6:0):(4:2)
+read: ?Move(174):
+-b-b-b--
+--b-b-b-
+---b---b
+--b---b-
+-----w--
+w---w-w-
+-w---w-w
+w---w-w-
+
+sent: (2:6):(3:7)
+read: Move:White:(2:6):(3:7)
+read: Move:Black:(6:6):(5:5)
+read: ?Move(174):
+-b-b-b--
+--b-b---
+---b-b-b
+--b---b-
+-----w-w
+w---w---
+-w---w-w
+w---w-w-
+
+sent: (1:1):(2:2)
+read: Move:White:(1:1):(2:2)
+read: Move:Black:(5:3):(4:4)
+read: ?Move(174):
+-b-b-b--
+--b-b---
+-----b-b
+--b-b-b-
+-----w-w
+w-w-w---
+-----w-w
+w---w-w-
+
+sent: (3:5):(5:3)
+read: Move:White:(3:5):(5:3)
+read: Move:Black:(6:2):(4:4)
+read: ?Move(173):
+-b-b-b--
+----b---
+-----b-b
+--b-b-b-
+-------w
+w-w-w---
+-----w-w
+w---w-w-
+
+sent: (2:4):(3:5)
+read: Move:White:(2:4):(3:5)
+read: Move:Black:(4:6):(2:4)
+read: ?Move(173):
+-b-b-b--
+----b---
+-----b-b
+--b-b---
+-------w
+w-w-b---
+-----w-w
+w---w-w-
+
+sent: (1:5):(3:3):(5:1)
+read: Move:White:(1:5):(3:3):(5:1)
+read: Move:Black:(7:1):(6:0)
+read: ?Move(173):
+---b-b--
+b---b---
+-w---b-b
+----b---
+-------w
+w-w-----
+-------w
+w---w-w-
+
+sent: (5:1):(6:2)
+read: Move:White:(5:1):(6:2)
+read: Move:Black:(7:3):(5:1)
+read: ?Move(172):
+-----b--
+b---b---
+-b---b-b
+----b---
+-------w
+w-w-----
+-------w
+w---w-w-
+
+sent: (0:4):(1:5)
+read: Move:White:(0:4):(1:5)
+read: Move:Black:(4:4):(3:5)
+read: ?Move(172):
+-----b--
+b---b---
+-b---b-b
+--------
+-----b-w
+w-w-----
+-----w-w
+w-----w-
+
+sent: (2:0):(3:1)
+read: Move:White:(2:0):(3:1)
+read: Move:Black:(6:4):(5:3)
+read: ?Move(171):
+-----b--
+b-------
+-b-b-b-b
+--------
+-w---b-w
+--w-----
+-----w-w
+w-----w-
+
+sent: (3:1):(4:0)
+read: Move:White:(3:1):(4:0)
+read: Move:Black:(5:1):(4:2)
+read: ?Move(171):
+-----b--
+b-------
+---b-b-b
+w-b-----
+-----b-w
+--w-----
+-----w-w
+w-----w-
+
+sent: (4:0):(5:1)
+read: Move:White:(4:0):(5:1)
+read: Move:Black:(4:2):(3:1)
+read: ?Move(170):
+-----b--
+b-------
+-w-b-b-b
+--------
+-b---b-w
+--w-----
+-----w-w
+w-----w-
+
+sent: (2:2):(4:0)
+read: Move:White:(2:2):(4:0)
+read: Move:Black:(6:0):(4:2)
+read: ?Move(170):
+-----b--
+--------
+---b-b-b
+w-b-----
+-----b-w
+--------
+-----w-w
+w-----w-
+
+sent: (0:0):(1:1)
+read: Move:White:(0:0):(1:1)
+read: Move:Black:(5:3):(4:4)
+read: ?Move(170):
+-----b--
+--------
+-----b-b
+w-b-b---
+-----b-w
+--------
+-w---w-w
+------w-
+
+sent: (1:5):(2:6)
+read: Move:White:(1:5):(2:6)
+read: Move:Black:(3:5):(2:4)
+read: ?Move(170):
+-----b--
+--------
+-----b-b
+w-b-b---
+-------w
+----b-w-
+-w-----w
+------w-
+
+sent: (2:6):(3:5)
+read: Move:White:(2:6):(3:5)
+read: Move:Black:(4:4):(2:6)
+read: ?Move(169):
+-----b--
+--------
+-----b-b
+w-b-----
+-------w
+----b-b-
+-w-----w
+------w-
+
+sent: (1:7):(3:5)
+read: Move:White:(1:7):(3:5)
+read: Move:Black:(2:4):(1:3)
+read: ?Move(169):
+-----b--
+--------
+-----b-b
+w-b-----
+-----w-w
+--------
+-w-b----
+------w-
+
+sent: (4:0):(5:1)
+read: Move:White:(4:0):(5:1)
+read: Move:Black:(1:3):(0:2)
+read: ?Move(168):
+-----b--
+--------
+-w---b-b
+--b-----
+-----w-w
+--------
+-w------
+--B---w-
+
+sent: (1:1):(2:0)
+read: Move:White:(1:1):(2:0)
+read: Move:Black:(0:2):(1:3)
+read: ?Move(168):
+-----b--
+--------
+-w---b-b
+--b-----
+-----w-w
+w-------
+---B----
+------w-
+
+sent: (5:1):(6:2)
+read: Move:White:(5:1):(6:2)
+read: Move:Black:(1:3):(2:4)
+read: ?Move(168):
+-----b--
+--w-----
+-----b-b
+--b-----
+-----w-w
+w---B---
+--------
+------w-
+
+sent: (6:2):(7:3)
+read: Move:White:(6:2):(7:3)
+read: Move:Black:(2:4):(4:6)
+read: ?Move(167):
+---W-b--
+--------
+-----b-b
+--b---B-
+-------w
+w-------
+--------
+------w-
+
+sent: (7:3):(6:2)
+read: Move:White:(7:3):(6:2)
+read: Move:Black:(4:6):(3:5)
+read: ?Move(167):
+-----b--
+--W-----
+-----b-b
+--b-----
+-----B-w
+w-------
+--------
+------w-
+
+sent: (6:2):(5:3)
+read: Move:White:(6:2):(5:3)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(167):
+-----b--
+--------
+---W-b-b
+--------
+---b-B-w
+w-------
+--------
+------w-
+
+sent: (2:0):(3:1)
+read: Move:White:(2:0):(3:1)
+read: Move:Black:(5:7):(4:6)
+read: ?Move(166):
+-----b--
+--------
+---W-b--
+------b-
+-w-b-B-w
+--------
+--------
+------w-
+
+sent: (5:3):(6:2)
+read: Move:White:(5:3):(6:2)
+read: Move:Black:(3:5):(4:4)
+read: ?Move(165):
+-----b--
+--W-----
+-----b--
+----B-b-
+-w-b---w
+--------
+--------
+------w-
+
+sent: (3:1):(4:2)
+read: Move:White:(3:1):(4:2)
+read: Move:Black:(7:5):(6:4)
+read: ?Move(165):
+--------
+--W-b---
+-----b--
+--w-B-b-
+---b---w
+--------
+--------
+------w-
+
+sent: (4:2):(5:1)
+read: Move:White:(4:2):(5:1)
+read: Move:Black:(4:6):(3:5)
+read: ?Move(164):
+--------
+--W-b---
+-w---b--
+----B---
+---b-b-w
+--------
+--------
+------w-
+
+sent: (6:2):(7:3)
+read: Move:White:(6:2):(7:3)
+read: Move:Black:(3:5):(2:4)
+read: ?Move(164):
+---W----
+----b---
+-w---b--
+----B---
+---b---w
+----b---
+--------
+------w-
+
+sent: (7:3):(6:2)
+read: Move:White:(7:3):(6:2)
+read: Move:Black:(4:4):(3:5)
+read: ?Move(163):
+--------
+--W-b---
+-w---b--
+--------
+---b-B-w
+----b---
+--------
+------w-
+
+sent: (5:1):(6:0)
+read: Move:White:(5:1):(6:0)
+read: Move:Black:(5:5):(4:4)
+read: ?Move(162):
+--------
+w-W-b---
+--------
+----b---
+---b-B-w
+----b---
+--------
+------w-
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(3:3):(2:2)
+read: ?Move(162):
+-W------
+--W-b---
+--------
+----b---
+-----B-w
+--b-b---
+--------
+------w-
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(6:4):(5:3)
+read: ?Move(161):
+--------
+W-W-----
+---b----
+----b---
+-----B-w
+--b-b---
+--------
+------w-
+
+sent: (6:0):(5:1)
+read: Move:White:(6:0):(5:1)
+read: Move:Black:(2:4):(1:3)
+read: ?Move(160):
+--------
+--W-----
+-W-b----
+----b---
+-----B-w
+--b-----
+---b----
+------w-
+
+sent: (6:2):(7:3)
+read: Move:White:(6:2):(7:3)
+read: Move:Black:(4:4):(3:3)
+read: ?Move(159):
+---W----
+--------
+-W-b----
+--------
+---b-B-w
+--b-----
+---b----
+------w-
+
+sent: (7:3):(6:4)
+read: Move:White:(7:3):(6:4)
+read: Move:Black:(5:3):(4:2)
+read: ?Move(158):
+--------
+----W---
+-W------
+--b-----
+---b-B-w
+--b-----
+---b----
+------w-
+
+sent: (6:4):(5:3)
+read: Move:White:(6:4):(5:3)
+read: Move:Black:(1:3):(0:4)
+read: ?Move(157):
+--------
+--------
+-W-W----
+--b-----
+---b-B-w
+--b-----
+--------
+----B-w-
+
+sent: (5:3):(3:1):(1:3)
+read: Move:White:(5:3):(3:1):(1:3)
+read: Move:Black:(0:4):(2:2)
+read: ?Move(156):
+--------
+--------
+-W------
+--------
+---b-B-w
+--B-----
+--------
+------w-
+
+sent: (5:1):(6:2)
+read: Move:White:(5:1):(6:2)
+read: Move:Black:(3:5):(4:4)
+read: ?Move(153):
+--------
+--W-----
+--------
+----B---
+---b---w
+--B-----
+--------
+------w-
+
+sent: (0:6):(1:5)
+read: Move:White:(0:6):(1:5)
+read: Move:Black:(4:4):(3:5)
+read: ?Move(150):
+--------
+--W-----
+--------
+--------
+---b-B-w
+--B-----
+-----w--
+--------
+
+sent: (6:2):(7:3)
+read: Move:White:(6:2):(7:3)
+read: Move:Black:(2:2):(3:1)
+read: ?Move(149):
+---W----
+--------
+--------
+--------
+-B-b-B-w
+--------
+-----w--
+--------
+
+sent: (7:3):(6:2)
+read: Move:White:(7:3):(6:2)
+read: Move:Black:(3:1):(4:2)
+read: ?Move(147):
+--------
+--W-----
+--------
+--B-----
+---b-B-w
+--------
+-----w--
+--------
+
+sent: (1:5):(2:6)
+read: Move:White:(1:5):(2:6)
+read: Move:Black:(3:5):(1:7)
+read: ?Move(147):
+--------
+--W-----
+--------
+--B-----
+---b---w
+--------
+-------B
+--------
+
+sent: (3:7):(4:6)
+read: Move:White:(3:7):(4:6)
+read: Move:Black:(1:7):(2:6)
+read: ?Move(144):
+--------
+--W-----
+--------
+--B---w-
+---b----
+------B-
+--------
+--------
+
+sent: (6:2):(7:1)
+read: Move:White:(6:2):(7:1)
+read: Move:Black:(2:6):(3:5)
+read: ?Move(143):
+-W------
+--------
+--------
+--B---w-
+---b-B--
+--------
+--------
+--------
+
+sent: (4:6):(5:7)
+read: Move:White:(4:6):(5:7)
+read: Move:Black:(3:5):(4:4)
+read: ?Move(141):
+-W------
+--------
+-------w
+--B-B---
+---b----
+--------
+--------
+--------
+
+sent: (5:7):(6:6)
+read: Move:White:(5:7):(6:6)
+read: Move:Black:(4:4):(5:5)
+read: ?Move(140):
+-W------
+------w-
+-----B--
+--B-----
+---b----
+--------
+--------
+--------
+
+sent: (6:6):(7:7)
+read: Move:White:(6:6):(7:7)
+read: Move:Black:(3:3):(2:4)
+read: ?Move(139):
+-W-----W
+--------
+-----B--
+--B-----
+--------
+----b---
+--------
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(2:4):(1:5)
+read: ?Move(139):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(138):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(137):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(137):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(136):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(135):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(135):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(134):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(133):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(132):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(131):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(131):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(130):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(129):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(129):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(128):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(128):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(127):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(126):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(126):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(125):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(124):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(123):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(123):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(122):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(121):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(121):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(120):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(120):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(119):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(118):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(118):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(117):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(116):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(116):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(115):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(114):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(114):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(113):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(112):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(112):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(111):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(111):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(110):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(109):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(109):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(108):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(108):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: ?Move(107):
+-------W
+W-------
+-----B--
+--B-----
+--------
+--------
+-----b--
+--------
+
+sent: (6:0):(7:1)
+read: Move:White:(6:0):(7:1)
+read: Move:Black:(4:2):(3:3)
+read: ?Move(106):
+-W-----W
+--------
+-----B--
+--------
+---B----
+--------
+-----b--
+--------
+
+sent: (7:1):(6:0)
+read: Move:White:(7:1):(6:0)
+read: Move:Black:(3:3):(4:2)
+read: Result:Draw
+Done.
+joe@Joes-MacBook-Pro ~/D/S/C/C/bin> 
+javac -d ../bin/ ../src/*.java -cp ../dependencies/commons-math3-3.6.1.jar 
+joe@Joes-MacBook-Pro ~/D/S/C/C/bin> 
+java -cp ../dependencies/commons-math3-3.6.1.jar:. RmCheckersClient 1 25
+read: SAM v1.0
+read: ?Username:
+sent: 9
+read: ?Password:
+read: ?Opponent:
+sent: 25
+read: Game:19609
+read: Color:White
+I am playing as White in Game:19609
+read: Result:White
+read: null
+-b-b-b-b
+b-b-b-b-
+-b-b-b-b
+--------
+--------
+w-w-w-w-
+-w-w-w-w
+w-w-w-w-
+
+sent: (5:1):(4:0)
+read: null
+read: null
+Exception in thread "main" java.lang.NullPointerException
+        at RmCheckersClient.playGame(RmCheckersClient.java:181)
+        at RmCheckersClient.main(RmCheckersClient.java:146)
+joe@Joes-MacBook-Pro ~/D/S/C/C/bin> 
+java -cp ../dependencies/commons-math3-3.6.1.jar:. RmCheckersClient 1 25
+read: SAM v1.0
+read: ?Username:
+sent: 9
+read: ?Password:
+read: ?Opponent:
+sent: 25
+read: Game:60924
+read: Color:Black
+I am playing as Black in Game:60924
+read: ?Move(180):
+-b-b-b-b
+b-b-b-b-
+-b-b-b-b
+--------
+--------
+w-w-w-w-
+-w-w-w-w
+w-w-w-w-
+
+sent: (5:5):(4:4)
+read: Move:Black:(5:5):(4:4)
+read: Move:White:(2:4):(3:3)
+read: ?Move(177):
+-b-b-b-b
+b-b-b-b-
+-b-b---b
+----b---
+---w----
+w-w---w-
+-w-w-w-w
+w-w-w-w-
+
+sent: (6:6):(5:5)
+read: Move:Black:(6:6):(5:5)
+read: Move:White:(2:6):(3:5)
+read: ?Move(166):
+-b-b-b-b
+b-b-b---
+-b-b-b-b
+----b---
+---w-w--
+w-w-----
+-w-w-w-w
+w-w-w-w-
+
+sent: (4:4):(2:6)
+read: Move:Black:(4:4):(2:6)
+read: Move:White:(1:5):(3:7)
+read: ?Move(166):
+-b-b-b-b
+b-b-b---
+-b-b-b-b
+--------
+---w---w
+w-w-----
+-w-w---w
+w-w-w-w-
+
+sent: (5:3):(4:2)
+read: Move:Black:(5:3):(4:2)
+read: Move:White:(0:4):(1:5)
+read: ?Move(165):
+-b-b-b-b
+b-b-b---
+-b---b-b
+--b-----
+---w---w
+w-w-----
+-w-w-w-w
+w-w---w-
+
+sent: (4:2):(2:4)
+read: Move:Black:(4:2):(2:4)
+read: Move:White:(1:5):(3:3)
+read: ?Move(164):
+-b-b-b-b
+b-b-b---
+-b---b-b
+--------
+---w---w
+w-w-----
+-w-w---w
+w-w---w-
+
+sent: (7:5):(6:6)
+read: Move:Black:(7:5):(6:6)
+read: Move:White:(2:2):(3:1)
+read: ?Move(163):
+-b-b---b
+b-b-b-b-
+-b---b-b
+--------
+-w-w---w
+w-------
+-w-w---w
+w-w---w-
+
+sent: (5:5):(4:6)
+read: Move:Black:(5:5):(4:6)
+read: Move:White:(3:7):(5:5)
+read: ?Move(162):
+-b-b---b
+b-b-b-b-
+-b---w-b
+--------
+-w-w----
+w-------
+-w-w---w
+w-w---w-
+
+sent: (6:6):(4:4):(2:2):(0:4)
+read: Move:Black:(6:6):(4:4):(2:2):(0:4)
+read: Move:White:(3:1):(4:2)
+read: ?Move(160):
+-b-b---b
+b-b-b---
+-b-----b
+--w-----
+--------
+w-------
+-w-----w
+w-w-B-w-
+
+sent: (5:1):(3:3)
+read: Move:Black:(5:1):(3:3)
+read: Move:White:(1:7):(2:6)
+read: ?Move(159):
+-b-b---b
+b-b-b---
+-------b
+--------
+---b----
+w-----w-
+-w------
+w-w-B-w-
+
+sent: (6:0):(5:1)
+read: Move:Black:(6:0):(5:1)
+read: Move:White:(2:6):(3:5)
+read: ?Move(156):
+-b-b---b
+--b-b---
+-b-----b
+--------
+---b-w--
+w-------
+-w------
+w-w-B-w-
+
+sent: (6:4):(5:3)
+read: Move:Black:(6:4):(5:3)
+read: Move:White:(1:1):(2:2)
+read: ?Move(155):
+-b-b---b
+--b-----
+-b-b---b
+--------
+---b-w--
+w-w-----
+--------
+w-w-B-w-
+
+sent: (3:3):(1:1)
+read: Move:Black:(3:3):(1:1)
+read: Move:White:(0:0):(2:2)
+read: ?Move(154):
+-b-b---b
+--b-----
+-b-b---b
+--------
+-----w--
+w-w-----
+--------
+--w-B-w-
+
+sent: (7:7):(6:6)
+read: Move:Black:(7:7):(6:6)
+read: Move:White:(0:2):(1:3)
+read: ?Move(152):
+-b-b----
+--b---b-
+-b-b---b
+--------
+-----w--
+w-w-----
+---w----
+----B-w-
+
+sent: (5:1):(4:2)
+read: Move:Black:(5:1):(4:2)
+read: Move:White:(1:3):(2:4)
+read: ?Move(151):
+-b-b----
+--b---b-
+---b---b
+--b-----
+-----w--
+w-w-w---
+--------
+----B-w-
+
+sent: (6:6):(5:5)
+read: Move:Black:(6:6):(5:5)
+read: Move:White:(2:2):(3:1)
+read: ?Move(150):
+-b-b----
+--b-----
+---b-b-b
+--b-----
+-w---w--
+w---w---
+--------
+----B-w-
+
+sent: (0:4):(1:5)
+read: Move:Black:(0:4):(1:5)
+read: Move:White:(0:6):(1:7)
+read: ?Move(150):
+-b-b----
+--b-----
+---b-b-b
+--b-----
+-w---w--
+w---w---
+-----B-w
+--------
+
+sent: (1:5):(3:3)
+read: Move:Black:(1:5):(3:3)
+read: Move:White:(1:7):(2:6)
+read: ?Move(150):
+-b-b----
+--b-----
+---b-b-b
+--b-----
+-w-B-w--
+w-----w-
+--------
+--------
+
+sent: (5:5):(4:4)
+read: Move:Black:(5:5):(4:4)
+read: Move:White:(2:6):(3:7)
+read: ?Move(149):
+-b-b----
+--b-----
+---b---b
+--b-b---
+-w-B-w-w
+w-------
+--------
+--------
+
+sent: (4:4):(2:6)
+read: Move:Black:(4:4):(2:6)
+read: Move:White:(3:1):(4:0)
+read: ?Move(149):
+-b-b----
+--b-----
+---b---b
+w-b-----
+---B---w
+w-----b-
+--------
+--------
+
+sent: (7:1):(6:0)
+read: Move:Black:(7:1):(6:0)
+read: Move:White:(2:0):(3:1)
+read: ?Move(149):
+---b----
+b-b-----
+---b---b
+w-b-----
+-w-B---w
+------b-
+--------
+--------
+
+sent: (4:2):(2:0)
+read: Move:Black:(4:2):(2:0)
+read: Move:White:(4:0):(5:1)
+read: ?Move(148):
+---b----
+b-b-----
+-w-b---b
+--------
+---B---w
+b-----b-
+--------
+--------
+
+sent: (6:0):(4:2)
+read: Move:Black:(6:0):(4:2)
+read: Move:White:(3:7):(4:6)
+read: ?Move(148):
+---b----
+--b-----
+---b---b
+--b---w-
+---B----
+b-----b-
+--------
+--------
+
+sent: (5:7):(3:5)
+read: Move:Black:(5:7):(3:5)
+read: Result:Black
+Done.
